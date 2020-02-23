@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-       System.out.println("Projet Faiz Faiz et Roro");
+       System.out.println("Projet Faiz Faiz et Roro :) :p :3 ;) =D uWu (*.*) :o )");
 	}
 
 }
