@@ -17,4 +17,8 @@ public class Avion {
 	public void setNombrePlaces(int a) {
 		nombrePlaces = a; 
 	}
-}
+	public void NombrePlaces(){
+		System.out.println("le code de roat est un mess ");
+	}
+	}
+
