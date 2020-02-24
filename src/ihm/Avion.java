@@ -11,10 +11,10 @@ public class Avion {
 	public Avion() {
 		
 	}
-	public void getNombrePlaces(){
+	public void getNombrePlacesdisponible(){
 		System.out.println(nombrePlaces);
 	}
-	public void setNombrePlaces(int a) {
+	public void setNombrePlacesDisponible(int a) {
 		nombrePlaces = a; 
 	}
 	public void NombrePlaces(){
