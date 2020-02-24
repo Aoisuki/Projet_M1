@@ -9,6 +9,7 @@ public class Personnage {
 	private int niveau;
 	private char sexe;
 	private int pointAttaque;
+	
 	public Personnage() {
 		
 	}
