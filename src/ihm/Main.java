@@ -14,7 +14,7 @@ public class Main {
        {
        System.out.println(age_moyen);
        }
-    		   
+       System.out.println("Test j'ai fait sysout puis ctrl + espace");
 	}
 
 }
