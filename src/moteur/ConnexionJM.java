@@ -2,7 +2,7 @@ package moteur;
 import java.sql.*;
 
 public class ConnexionJM {
-		
+		/*
 		public static void main(String[] args) {
 			
 			try {
@@ -24,6 +24,8 @@ public class ConnexionJM {
 				e.printStackTrace();
 			}
 		}
+		*/
+	
 		public static Connection connecterDB() {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
