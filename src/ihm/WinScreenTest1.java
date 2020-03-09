@@ -111,7 +111,7 @@ public class WinScreenTest1 extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "Nom", "Age", "Date", "Pays", "Covid-19"
+				"Id", "Nom", "Age", "Date", "Pays", "Covid-19", "Distance"
 			}
 		));
 		scrollPane.setViewportView(table2);
@@ -211,30 +211,31 @@ public class WinScreenTest1 extends JFrame {
 	    
 	    
 	}
-	
-	public ArrayList<User> ListUsers(){
+	//une méthode pour stocker les Users, on utilise ici une ArrayList, chaque instance "User" créé sera insérer dans la liste "usersList"
+	public ArrayList<User> ListUsers(){ 
 		ArrayList<User> usersList = new ArrayList<User>();
 		Statement st;
         ResultSet rs;
         PreparedStatement ps = null;
         
         try{
-        	Connection con = ConnexionJM.connecterDB();
-            st = con.createStatement();
-            String searchQuery = "SELECT * FROM user";
-            rs = st.executeQuery(searchQuery);
+        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+            st = con.createStatement(); //on creer des statements pour extraire les données
+            String searchQuery = "SELECT * FROM user"; //Ici notre requêtes
+            rs = st.executeQuery(searchQuery); //exécuter
             
             User user;
             
-            while(rs.next())
+            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
             {
                 user = new User( rs.getInt("id"),
                 				 rs.getString("nom"),
                 				 rs.getInt("age"),
                 				 rs.getDate("date"),
                 				 rs.getString("pays"),
-                				 rs.getBoolean("covid-19"));
-                usersList.add(user);
+                				 rs.getBoolean("covid-19"),
+                				 rs.getInt("distance"));
+                usersList.add(user); //ensuite ajouter user dans la liste
             }
             
         }catch(Exception ex){
@@ -244,10 +245,10 @@ public class WinScreenTest1 extends JFrame {
         return usersList;
 	}
 	
-	public void show_user(){
+	public void show_user(){ //afficher les données récupérés dans JTable
 		ArrayList<User> users = ListUsers();
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
-		Object[] row = new Object[6];
+		Object[] row = new Object[7];
         
         for(int i = 0; i < users.size(); i++)
         {
@@ -256,7 +257,8 @@ public class WinScreenTest1 extends JFrame {
             row[2] = users.get(i).getAge();
             row[3] = users.get(i).getDate();    
             row[4] = users.get(i).getPays();  
-            row[5] = users.get(i).getCovid19(); 
+            row[5] = users.get(i).getCovid19();
+            row[6] = users.get(i).getDistance();  
             model.addRow(row);
         }
        // table2.setModel(model);
@@ -299,7 +301,8 @@ public class WinScreenTest1 extends JFrame {
 		                                 rs.getInt("age"),
 		                                 rs.getDate("date"),
 		                                 rs.getString("pays"),
-		                                 rs.getBoolean("covid-19")
+		                                 rs.getBoolean("covid-19"),
+		                                 rs.getInt("distance")
 		                                );
 		                usersList.add(user);
 		            }
@@ -314,7 +317,7 @@ public class WinScreenTest1 extends JFrame {
 	public void find_user(){
 		ArrayList<User> users = ListUsers2Find(textField.getText());
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
-		Object[] row = new Object[6];
+		Object[] row = new Object[7];
         
         for(int i = 0; i < users.size(); i++)
         {
@@ -324,6 +327,7 @@ public class WinScreenTest1 extends JFrame {
             row[3] = users.get(i).getDate();    
             row[4] = users.get(i).getPays();  
             row[5] = users.get(i).getCovid19(); 
+            row[6] = users.get(i).getDistance();  
             model.addRow(row);
         }
         table2.setModel(model);

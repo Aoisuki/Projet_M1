@@ -10,8 +10,9 @@ public class User {
     private Date date;
     private boolean covid19;
     private String pays;
+    private int distance;
     
-    public User(int Id,String Name,int Age, Date Date, String Pays, boolean Covid19)
+    public User(int Id,String Name,int Age, Date Date, String Pays, boolean Covid19, int Distance)
     {
         this.id = Id;
         this.name = Name;
@@ -19,6 +20,7 @@ public class User {
         this.date = Date;
         this.pays = Pays;
         this.covid19 = Covid19;
+        this.distance = Distance;
     }
     
     public int getId()
@@ -50,5 +52,8 @@ public class User {
 		   	return "Non";
 	   }
    }
- 
+   
+   public int getDistance() {
+	   return distance;
+   }
 }
