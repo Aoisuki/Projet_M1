@@ -330,6 +330,7 @@ public class WinScreenTest1 extends JFrame {
             row[6] = users.get(i).getDistance();  
             model.addRow(row);
         }
+        
         table2.setModel(model);
        
 	}
