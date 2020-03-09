@@ -41,20 +41,15 @@ import java.awt.Color;
 import javax.swing.JTable;
 
 
-
-
-
-
-
 public class WinScreenTest1 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JScrollPane scrollPane;
 	private JTable table2 = new JTable();
-	JLabel lblMsgErreur = new JLabel();
-	JLabel lblMsgErreur2 = new JLabel();
-	
+	private JLabel lblMsgErreur = new JLabel();
+	private JLabel lblMsgErreur2 = new JLabel();
+	private JPanel affichePanel = new JPanel();
     // read a text file from resources folder that is parallel to src folder
    
 	/**
@@ -64,7 +59,7 @@ public class WinScreenTest1 extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					WinScreenTest1 frame = new WinScreenTest1();
+					WinScreenTest1 frame = new WinScreenTest1(); 
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,31 +75,35 @@ public class WinScreenTest1 extends JFrame {
 		show_user();
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 919, 576);
+		setBounds(100, 100, 1025, 662);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(156, 11, 634, 167);
-		contentPane.add(buttonPanel);
-		buttonPanel.setLayout(null);
+		JPanel boutonPanel = new JPanel();
+		boutonPanel.setBounds(24, 45, 218, 497);
+		contentPane.add(boutonPanel);
+		
+		JPanel searchPanel = new JPanel();
+		searchPanel.setBounds(266, 45, 616, 168);
+		contentPane.add(searchPanel);
+		searchPanel.setLayout(null);
 		
 		textField = new JTextField();
 		textField.setBounds(26, 11, 471, 50);
-		buttonPanel.add(textField);
+		searchPanel.add(textField);
 		textField.setColumns(10);
 		
 		
 		
-		JPanel affichePanel = new JPanel();
-		affichePanel.setBounds(156, 241, 634, 238);
+		
+		affichePanel.setBounds(266, 303, 616, 239);
 		contentPane.add(affichePanel);
 		affichePanel.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 0, 636, 238);
+		scrollPane.setBounds(0, 0, 616, 238);
 		affichePanel.add(scrollPane);
 		
 		table2 = new JTable();
@@ -112,7 +111,7 @@ public class WinScreenTest1 extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "Nom", "Age"
+				"Id", "Nom", "Age", "Date", "Pays", "Covid-19"
 			}
 		));
 		scrollPane.setViewportView(table2);
@@ -121,12 +120,12 @@ public class WinScreenTest1 extends JFrame {
 		
 		lblMsgErreur = new JLabel("Information introuvable ! Veuillez recommencer ! ");
 		lblMsgErreur.setBounds(180, 61, 322, 14);
-		buttonPanel.add(lblMsgErreur);
+		searchPanel.add(lblMsgErreur);
 		lblMsgErreur.setVisible(false);
 		
 		lblMsgErreur2 = new JLabel("Veuillez saisir les informations dans la barre de recherche");
 		lblMsgErreur2.setBounds(115, 61, 382, 14);
-		buttonPanel.add(lblMsgErreur2);
+		searchPanel.add(lblMsgErreur2);
 		lblMsgErreur2.setVisible(false);
 		 
 		JButton btnShowAllData = new JButton("Show all data ! ");
@@ -134,7 +133,8 @@ public class WinScreenTest1 extends JFrame {
 		btnShowAllData.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/logo/icons8-bookmark-64.png")));
 		btnShowAllData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					
+				
+				affichePanel.setVisible(true);
 				lblMsgErreur.setVisible(false);
 				lblMsgErreur2.setVisible(false);
 				clearTable(); 
@@ -145,7 +145,7 @@ public class WinScreenTest1 extends JFrame {
 		});
 		
 		btnShowAllData.setBounds(26, 84, 199, 72);
-		buttonPanel.add(btnShowAllData);
+		searchPanel.add(btnShowAllData);
 		
 		JButton btnOk = new JButton("");
 		btnOk.setBackground(Color.WHITE);
@@ -153,6 +153,7 @@ public class WinScreenTest1 extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				affichePanel.setVisible(true);
 				lblMsgErreur.setVisible(false);
 				lblMsgErreur2.setVisible(false);
 				clearTable(); 
@@ -162,15 +163,15 @@ public class WinScreenTest1 extends JFrame {
 			
 		});
 		btnOk.setBounds(507, 11, 97, 75);
-		buttonPanel.add(btnOk);
+		searchPanel.add(btnOk);
 		
 		
 		
-		JLabel lblNewLabel = new JLabel();
+		JLabel lblBgImg = new JLabel();
 		//String path="/imgs/stars3.jpg";
-		lblNewLabel.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3.jpg")));
-		lblNewLabel.setBounds(0, 0, 913, 547);
-		contentPane.add(lblNewLabel);
+		lblBgImg.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3.jpg")));
+		lblBgImg.setBounds(0, 0, 1019, 633);
+		contentPane.add(lblBgImg);
 		
 		/*
 		ImageIcon myImage = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imgs/stars2.jpg")));
@@ -196,7 +197,8 @@ public class WinScreenTest1 extends JFrame {
 		ImageIcon finalImage = new ImageIcon(fitimage(image, lblNewLabel.getWidth(), lblNewLabel.getHeight()));
 		lblNewLabel.setIcon(finalImage);
 		*/
-		
+		affichePanel.setVisible(false);
+		boutonPanel.setVisible(false);
 		
 	}
 	private Image fitimage(Image img , int w , int h){
@@ -226,7 +228,12 @@ public class WinScreenTest1 extends JFrame {
             
             while(rs.next())
             {
-                user = new User( rs.getInt("id"),rs.getString("nom"),rs.getInt("age"));
+                user = new User( rs.getInt("id"),
+                				 rs.getString("nom"),
+                				 rs.getInt("age"),
+                				 rs.getDate("date"),
+                				 rs.getString("pays"),
+                				 rs.getBoolean("covid-19"));
                 usersList.add(user);
             }
             
@@ -240,13 +247,16 @@ public class WinScreenTest1 extends JFrame {
 	public void show_user(){
 		ArrayList<User> users = ListUsers();
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
-		Object[] row = new Object[3];
+		Object[] row = new Object[6];
         
         for(int i = 0; i < users.size(); i++)
         {
             row[0] = users.get(i).getId();
             row[1] = users.get(i).getName();
             row[2] = users.get(i).getAge();
+            row[3] = users.get(i).getDate();    
+            row[4] = users.get(i).getPays();  
+            row[5] = users.get(i).getCovid19(); 
             model.addRow(row);
         }
        // table2.setModel(model);
@@ -262,26 +272,34 @@ public class WinScreenTest1 extends JFrame {
         try{
         	Connection con = ConnexionJM.connecterDB();
             st = con.createStatement();
-            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'";
+            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`, `date`) LIKE '%"+ValToSearch+"%'";
             rs = st.executeQuery(searchQuery);
             
             User user;
             
            if(isNullOrEmpty(ValToSearch)) {
-        	   System.out.println("No text in textField");
+        	   System.out.println("-----> Error : No text found\n");
         	   lblMsgErreur2.setVisible(true);
+        	   affichePanel.setVisible(false);
            }else {
-	            if (!rs.isBeforeFirst()) {    
-	                System.out.println("No data found");
+	            if (!rs.isBeforeFirst()) {  
+	            	System.out.println("Scanning text...");
+	            	System.out.println("Text : "+ValToSearch);
+	            	System.out.println("Searching in data...");
+	                System.out.println("-----> Error : No data found\n");
 	                lblMsgErreur.setVisible(true);
 	                lblMsgErreur2.setVisible(false);
+	                affichePanel.setVisible(false);
 	            }else { 
              
 		            while(rs.next()) {
 		                user = new User(
 		                                 rs.getInt("id"),
 		                                 rs.getString("nom"),
-		                                 rs.getInt("age")
+		                                 rs.getInt("age"),
+		                                 rs.getDate("date"),
+		                                 rs.getString("pays"),
+		                                 rs.getBoolean("covid-19")
 		                                );
 		                usersList.add(user);
 		            }
@@ -296,13 +314,16 @@ public class WinScreenTest1 extends JFrame {
 	public void find_user(){
 		ArrayList<User> users = ListUsers2Find(textField.getText());
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
-		Object[] row = new Object[3];
+		Object[] row = new Object[6];
         
         for(int i = 0; i < users.size(); i++)
         {
             row[0] = users.get(i).getId();
             row[1] = users.get(i).getName();
             row[2] = users.get(i).getAge();
+            row[3] = users.get(i).getDate();    
+            row[4] = users.get(i).getPays();  
+            row[5] = users.get(i).getCovid19(); 
             model.addRow(row);
         }
         table2.setModel(model);

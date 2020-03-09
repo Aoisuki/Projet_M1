@@ -1,17 +1,24 @@
 package moteur;
 
+import java.sql.Date;
+
 public class User {
 	
 	private int id;
     private String name;
     private int age;
+    private Date date;
+    private boolean covid19;
+    private String pays;
     
-    
-    public User(int Id,String Name,int Age)
+    public User(int Id,String Name,int Age, Date Date, String Pays, boolean Covid19)
     {
         this.id = Id;
         this.name = Name;
         this.age = Age;
+        this.date = Date;
+        this.pays = Pays;
+        this.covid19 = Covid19;
     }
     
     public int getId()
@@ -28,4 +35,20 @@ public class User {
     {
         return age;
     }
+    public Date getDate() {
+    	return date;
+    }
+    
+   public String getPays() {
+	   return pays;
+   }
+   
+   public String getCovid19() {
+	   if(covid19 == true) {
+		   return "Oui";
+	   }else {
+		   	return "Non";
+	   }
+   }
+ 
 }

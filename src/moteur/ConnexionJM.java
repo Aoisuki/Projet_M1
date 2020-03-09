@@ -30,13 +30,14 @@ public class ConnexionJM {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				System.out.println("Driver marche !");
-				String url="jdbc:mysql://localhost/test";
+				String url="jdbc:mysql://localhost/test?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
 				String user="root";
 				String pw="";
 				
 				Connection c = DriverManager.getConnection(url,user,pw);
-				
+				System.out.println("Connexion en cours... Veuillez patienter.");
 				System.out.println("Vous êtes connecter !");
+				System.out.println("********************");
 				return c;
 			}catch(Exception e) {
 				e.printStackTrace();
