@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import moteur.ConnexionJM;
 import moteur.FindFunction;
+import moteur.ImagePanel;
 import moteur.User;
 
 import java.awt.event.ActionListener;
@@ -31,11 +32,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTable;
@@ -70,6 +73,7 @@ public class WinScreenTest1 extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws URISyntaxException 
 	 */
 	public WinScreenTest1() {
 		show_user();
@@ -89,6 +93,7 @@ public class WinScreenTest1 extends JFrame {
 		searchPanel.setBounds(266, 45, 616, 168);
 		contentPane.add(searchPanel);
 		searchPanel.setLayout(null);
+		searchPanel.setBackground(new Color(0,0,0,0)); //Background panel tranparent !! <3 contraire : il faut mettre Color(0,0,0,100)
 		
 		textField = new JTextField();
 		textField.setBounds(26, 11, 471, 50);
@@ -167,38 +172,21 @@ public class WinScreenTest1 extends JFrame {
 		
 		
 		
-		JLabel lblBgImg = new JLabel();
+		JLabel lblNewLabel = new JLabel();
 		//String path="/imgs/stars3.jpg";
-		lblBgImg.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3.jpg")));
-		lblBgImg.setBounds(0, 0, 1019, 633);
-		contentPane.add(lblBgImg);
+		lblNewLabel.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3-conv.jpg")));
+		lblNewLabel.setBounds(0, 0, 1019, 633);
+		contentPane.add(lblNewLabel);
 		
-		/*
-		ImageIcon myImage = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imgs/stars2.jpg")));
-		Image newImage = myImage.getImage(); 
-		Image newImage2 = newImage.getScaledInstance(lblNewLabel.getWidth(), lblNewLabel.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon finalImage = new ImageIcon(newImage);
-		*/
-		
-		/*
-		ImageIcon icon = new ImageIcon("/imgs/stars3.jpg");
-		Image img = icon.getImage();
-		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bi.createGraphics();
-		g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
-		ImageIcon finalImage = new ImageIcon(bi); 
-		*/
-		
-		//ImageIcon finalImage = new ImageIcon(new ImageIcon("/imgs/stars3.jpg").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
-		
-		/*
-		ImageIcon icon = new ImageIcon("/imgs/stars1.jpg");
-		Image image = icon.getImage();
-		ImageIcon finalImage = new ImageIcon(fitimage(image, lblNewLabel.getWidth(), lblNewLabel.getHeight()));
-		lblNewLabel.setIcon(finalImage);
-		*/
-		affichePanel.setVisible(false);
 		boutonPanel.setVisible(false);
+		affichePanel.setVisible(false);
+	
+			
+			
+			
+			
+
+
 		
 	}
 	private Image fitimage(Image img , int w , int h){
