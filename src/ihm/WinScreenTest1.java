@@ -47,6 +47,9 @@ import javax.swing.JComboBox;
 
 public class WinScreenTest1 extends JFrame {
 
+	private int i = 1;
+	private int j = 1903;
+	private String s;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JScrollPane scrollPane;
@@ -54,6 +57,11 @@ public class WinScreenTest1 extends JFrame {
 	private JLabel lblMsgErreur = new JLabel();
 	private JLabel lblMsgErreur2 = new JLabel();
 	private JPanel affichePanel = new JPanel();
+	private JComboBox cboxDateA = new JComboBox();
+	private JComboBox cboxDateB = new JComboBox();
+	private JComboBox cboxPays = new JComboBox();
+	private String pays[] = new String[10];
+	private String annee[] = new String[115];
     // read a text file from resources folder that is parallel to src folder
    
 	/**
@@ -77,7 +85,8 @@ public class WinScreenTest1 extends JFrame {
 	 * @throws URISyntaxException 
 	 */
 	public WinScreenTest1() {
-		show_user();
+		cherchePays();
+		genererAnnee();
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1025, 662);
@@ -167,9 +176,7 @@ public class WinScreenTest1 extends JFrame {
 		btnShowAllData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				affichePanel.setVisible(true);
-				lblMsgErreur.setVisible(false);
-				lblMsgErreur2.setVisible(false);
+				initScreen();
 				clearTable(); 
 				show_user();
 					
@@ -186,9 +193,7 @@ public class WinScreenTest1 extends JFrame {
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				affichePanel.setVisible(true);
-				lblMsgErreur.setVisible(false);
-				lblMsgErreur2.setVisible(false);
+				initScreen();
 				clearTable(); 
 				find_user();
 				
@@ -197,14 +202,14 @@ public class WinScreenTest1 extends JFrame {
 		});
 		btnOk.setBounds(507, 11, 97, 75);
 		searchPanel.add(btnOk);
-		String[] date = {"", "2011", "2012", "2013", "2014", "2015", "2016", "2017"}; 
-		JComboBox cboxDateA = new JComboBox(date);
+		//String[] date = {"", "2006","2007","2008","2009","2010","2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"}; 
+		cboxDateA = new JComboBox(annee);
 		cboxDateA.setBounds(349, 110, 85, 20);
 		searchPanel.add(cboxDateA);
 		
-		JComboBox cboxDate2 = new JComboBox(date);
-		cboxDate2.setBounds(504, 110, 85, 20);
-		searchPanel.add(cboxDate2);
+		cboxDateB = new JComboBox(annee);
+		cboxDateB.setBounds(504, 110, 85, 20);
+		searchPanel.add(cboxDateB);
 		
 		JLabel lblSelectDate = new JLabel("Date between : ");
 		lblSelectDate.setBounds(246, 113, 93, 14);
@@ -221,7 +226,7 @@ public class WinScreenTest1 extends JFrame {
 		lblPays.setBounds(246, 143, 69, 14);
 		searchPanel.add(lblPays);
 		
-		JComboBox cboxPays = new JComboBox();
+		cboxPays = new JComboBox(pays);
 		cboxPays.setBounds(349, 140, 85, 20);
 		searchPanel.add(cboxPays);
 		
@@ -244,48 +249,132 @@ public class WinScreenTest1 extends JFrame {
 
 		
 	}
-	private Image fitimage(Image img , int w , int h){
-	    BufferedImage resizedimage = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
-	    Graphics2D g2 = resizedimage.createGraphics();
-	    g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g2.drawImage(img, 0, 0,w,h,null);
-	    g2.dispose();
-	    return resizedimage;
-	    
-	    
-	}
+	
 	//une méthode pour stocker les Users, on utilise ici une ArrayList, chaque instance "User" créé sera insérer dans la liste "usersList"
 	public ArrayList<User> ListUsers(){ 
 		ArrayList<User> usersList = new ArrayList<User>();
 		Statement st;
         ResultSet rs;
         PreparedStatement ps = null;
+        if((this.cboxDateA.getModel().getSelectedItem().equals("") && this.cboxDateB.getModel().getSelectedItem().equals(""))||(this.cboxDateA.getModel().getSelectedItem().equals("") || this.cboxDateB.getModel().getSelectedItem().equals(""))){
+        	if(this.cboxPays.getModel().getSelectedItem().equals("")){ //on cherche dans la data avec la date = null et pays = null  
+		        try{
+		        	System.out.println("Bouton Show Data : Les Dates et Pay ne sont pas séléctioné(s) dans les comboboxs !");
+		        	
+		        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+		            st = con.createStatement(); //on creer des statements pour extraire les données
+		            String searchQuery = "SELECT * FROM user"; //Ici notre requêtes
+		            rs = st.executeQuery(searchQuery); //exécuter
+		            
+		            User user;
+		            
+		            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+		            {
+		                user = new User( rs.getInt("id"),
+		                				 rs.getString("nom"),
+		                				 rs.getInt("age"),
+		                				 rs.getDate("date"),
+		                				 rs.getString("pays"),
+		                				 rs.getBoolean("covid-19"),
+		                				 rs.getInt("distance"));
+		                usersList.add(user); //ensuite ajouter user dans la liste
+		            }
+		            
+		        }catch(Exception ex){
+		            System.out.println(ex.getMessage());
+		        }
+		        
+		        return usersList;
+        	}else { //on cherche dans la data avec la date = null et pays = non null (sinon)
+        		try {
+        			System.out.println("Bouton Show Data : Les Dates ne sont pas séléctioné(s) dans les comboboxs, pays = "+this.cboxPays.getModel().getSelectedItem()+" !");
+        			
+	        		Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	  	            st = con.createStatement(); //on creer des statements pour extraire les données
+	  	            String searchQuery = "SELECT * FROM user WHERE pays ='"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
+	  	            rs = st.executeQuery(searchQuery); //exécuter
+	  	            
+	  	            User user;
+	  	            
+	  	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+	  	            {
+	  	                user = new User( rs.getInt("id"),
+	  	                				 rs.getString("nom"),
+	  	                				 rs.getInt("age"),
+	  	                				 rs.getDate("date"),
+	  	                				 rs.getString("pays"),
+	  	                				 rs.getBoolean("covid-19"),
+	  	                				 rs.getInt("distance"));
+	  	                usersList.add(user); //ensuite ajouter user dans la liste
+	  	            }
+	  	            
+	  	        }catch(Exception ex){
+	  	            System.out.println(ex.getMessage());
+	  	        }
+	  	        
+	  	        return usersList;
+        	}
+  	        	
+        }else{
+        	if(this.cboxPays.getModel().getSelectedItem().equals("")){ //on cherche dans la data avec la date = non null et pays = null 
         
-        try{
-        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
-            st = con.createStatement(); //on creer des statements pour extraire les données
-            String searchQuery = "SELECT * FROM user"; //Ici notre requêtes
-            rs = st.executeQuery(searchQuery); //exécuter
-            
-            User user;
-            
-            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
-            {
-                user = new User( rs.getInt("id"),
-                				 rs.getString("nom"),
-                				 rs.getInt("age"),
-                				 rs.getDate("date"),
-                				 rs.getString("pays"),
-                				 rs.getBoolean("covid-19"),
-                				 rs.getInt("distance"));
-                usersList.add(user); //ensuite ajouter user dans la liste
-            }
-            
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
+	        	 try{
+	        		 System.out.println("Bouton Show Data : Les Dates sont séléctioné(s) : "+cboxDateA.getModel().getSelectedItem()+" et "+cboxDateB.getModel().getSelectedItem()+" dans les comboboxs, pays non !");
+	        		 
+	 	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	 	            st = con.createStatement(); //on creer des statements pour extraire les données
+	 	            String searchQuery = "SELECT * FROM user WHERE date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'"; //Ici notre requêtes
+	 	            rs = st.executeQuery(searchQuery); //exécuter
+	 	            
+	 	            User user;
+	 	            
+	 	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+	 	            {
+	 	                user = new User( rs.getInt("id"),
+	 	                				 rs.getString("nom"),
+	 	                				 rs.getInt("age"),
+	 	                				 rs.getDate("date"),
+	 	                				 rs.getString("pays"),
+	 	                				 rs.getBoolean("covid-19"),
+	 	                				 rs.getInt("distance"));
+	 	                usersList.add(user); //ensuite ajouter user dans la liste
+	 	            }
+	 	            
+	 	        }catch(Exception ex){
+	 	            System.out.println(ex.getMessage());
+	 	        }
+	 	        
+	 	        return usersList;
+        	}else { //on cherche dans la data avec la date = non null et pays = non null (sinon)
+	        	 try{
+	        		 System.out.println("Bouton Show Data : Les Dates sont séléctioné(s) : "+cboxDateA.getModel().getSelectedItem()+" et "+cboxDateB.getModel().getSelectedItem()+" dans les comboboxs, pays ='"+this.cboxPays.getModel().getSelectedItem()+"' !");
+	        		 
+	  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	  	            st = con.createStatement(); //on creer des statements pour extraire les données
+	  	            String searchQuery = "SELECT * FROM user WHERE date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01' AND pays = '"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
+	  	            rs = st.executeQuery(searchQuery); //exécuter
+	  	            
+	  	            User user;
+	  	            
+	  	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+	  	            {
+	  	                user = new User( rs.getInt("id"),
+	  	                				 rs.getString("nom"),
+	  	                				 rs.getInt("age"),
+	  	                				 rs.getDate("date"),
+	  	                				 rs.getString("pays"),
+	  	                				 rs.getBoolean("covid-19"),
+	  	                				 rs.getInt("distance"));
+	  	                usersList.add(user); //ensuite ajouter user dans la liste
+	  	            }
+	  	            
+	  	        }catch(Exception ex){
+	  	            System.out.println(ex.getMessage());
+	  	        }
+	  	        
+	  	        return usersList;
+        	}
         }
-        
-        return usersList;
 	}
 	
 	public void show_user(){ //afficher les données récupérés dans JTable
@@ -293,7 +382,7 @@ public class WinScreenTest1 extends JFrame {
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
 		Object[] row = new Object[7];
         
-        for(int i = 0; i < users.size(); i++)
+        for(int i = 0; i < users.size(); i++) 
         {
             row[0] = users.get(i).getId();
             row[1] = users.get(i).getName();
@@ -307,56 +396,296 @@ public class WinScreenTest1 extends JFrame {
        // table2.setModel(model);
        
 	}
+	
+	/*******************************************************************************************************************************/
+	
 	public ArrayList<User> ListUsers2Find(String ValToSearch)
     {
         ArrayList<User> usersList = new ArrayList<User>();
         
         Statement st;
         ResultSet rs;
+        if((this.cboxDateA.getModel().getSelectedItem().equals("") && this.cboxDateB.getModel().getSelectedItem().equals(""))||(this.cboxDateA.getModel().getSelectedItem().equals("") || this.cboxDateB.getModel().getSelectedItem().equals(""))){
+        	if(this.cboxPays.getModel().getSelectedItem().equals("")){
+		        try{
+		        	System.out.println("Bouton Search : Les Dates et Pay ne sont pas séléctioné(s) dans les Comboboxs !");
+		        	
+		        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+		            st = con.createStatement(); //on creer des statements pour extraire les données
+		            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'"; //Ici notre requêtes
+		            rs = st.executeQuery(searchQuery); //exécuter
+		            
+		            User user;
+		            
+		            if(isNullOrEmpty(ValToSearch)) {
+			        	   System.out.println("-----> Error : No text found\n");
+			        	   lblMsgErreur2.setVisible(true);
+			        	   affichePanel.setVisible(false);
+			           }else {
+				            if (!rs.isBeforeFirst()) {  
+				            	System.out.println("Scanning text...");
+				            	System.out.println("Text : "+ValToSearch);
+				            	System.out.println("Searching in data...");
+				                System.out.println("-----> Error : No data found\n");
+				                lblMsgErreur.setVisible(true);
+				                lblMsgErreur2.setVisible(false);
+				                affichePanel.setVisible(false);
+				            }else { 
+			             
+					            while(rs.next()) {
+					                user = new User(
+					                                 rs.getInt("id"),
+					                                 rs.getString("nom"),
+					                                 rs.getInt("age"),
+					                                 rs.getDate("date"),
+					                                 rs.getString("pays"),
+					                                 rs.getBoolean("covid-19"),
+					                                 rs.getInt("distance")
+					                                );
+					                usersList.add(user);
+					            }
+				            }
+			           }
+		        }catch(Exception ex){
+		            System.out.println(ex.getMessage());
+		        }
+		        
+		        return usersList;
+        	}else {
+        		try {
+        			System.out.println("Bouton Search : Les Dates ne sont pas séléctioné(s) dans les comboboxs, pays = "+this.cboxPays.getModel().getSelectedItem()+" !");
+        			
+	        		Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	  	            st = con.createStatement(); //on creer des statements pour extraire les données
+	  	            String searchQuery = "SELECT * FROM WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND pays ='"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
+	  	            rs = st.executeQuery(searchQuery); //exécuter
+	  	            
+	  	            User user;
+	  	            
+	  	          if(isNullOrEmpty(ValToSearch)) {
+		        	   System.out.println("-----> Error : No text found\n");
+		        	   lblMsgErreur2.setVisible(true);
+		        	   affichePanel.setVisible(false);
+		           }else {
+			            if (!rs.isBeforeFirst()) {  
+			            	System.out.println("Scanning text...");
+			            	System.out.println("Text : "+ValToSearch);
+			            	System.out.println("Searching in data...");
+			                System.out.println("-----> Error : No data found\n");
+			                lblMsgErreur.setVisible(true);
+			                lblMsgErreur2.setVisible(false);
+			                affichePanel.setVisible(false);
+			            }else { 
+		             
+				            while(rs.next()) {
+				                user = new User(
+				                                 rs.getInt("id"),
+				                                 rs.getString("nom"),
+				                                 rs.getInt("age"),
+				                                 rs.getDate("date"),
+				                                 rs.getString("pays"),
+				                                 rs.getBoolean("covid-19"),
+				                                 rs.getInt("distance")
+				                                );
+				                usersList.add(user);
+				            }
+			            }
+		           }
+	        }catch(Exception ex){
+	            System.out.println(ex.getMessage());
+	        }
+	        
+	        return usersList;
+        	}
+  	        	
+        }else{
+        	if(this.cboxPays.getModel().getSelectedItem().equals("")){
         
-        try{
-        	Connection con = ConnexionJM.connecterDB();
-            st = con.createStatement();
-            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'";
-            rs = st.executeQuery(searchQuery);
-            
-            User user;
-            
-           if(isNullOrEmpty(ValToSearch)) {
-        	   System.out.println("-----> Error : No text found\n");
-        	   lblMsgErreur2.setVisible(true);
-        	   affichePanel.setVisible(false);
-           }else {
-	            if (!rs.isBeforeFirst()) {  
-	            	System.out.println("Scanning text...");
-	            	System.out.println("Text : "+ValToSearch);
-	            	System.out.println("Searching in data...");
-	                System.out.println("-----> Error : No data found\n");
-	                lblMsgErreur.setVisible(true);
-	                lblMsgErreur2.setVisible(false);
-	                affichePanel.setVisible(false);
-	            }else { 
-             
-		            while(rs.next()) {
-		                user = new User(
-		                                 rs.getInt("id"),
-		                                 rs.getString("nom"),
-		                                 rs.getInt("age"),
-		                                 rs.getDate("date"),
-		                                 rs.getString("pays"),
-		                                 rs.getBoolean("covid-19"),
-		                                 rs.getInt("distance")
-		                                );
-		                usersList.add(user);
+	        	 try{
+	        		 System.out.println("Bouton Show Data : Les Dates sont séléctioné(s) : "+cboxDateA.getModel().getSelectedItem()+" et "+cboxDateB.getModel().getSelectedItem()+" dans les comboboxs, pays non !");
+		        		
+	 	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	 	            st = con.createStatement(); //on creer des statements pour extraire les données
+	 	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'"; //Ici notre requêtes
+	 	            rs = st.executeQuery(searchQuery); //exécuter
+	 	            
+	 	            User user;
+	 	            
+	 	           if(isNullOrEmpty(ValToSearch)) {
+		        	   System.out.println("-----> Error : No text found\n");
+		        	   lblMsgErreur2.setVisible(true);
+		        	   affichePanel.setVisible(false);
+		           }else {
+			            if (!rs.isBeforeFirst()) {  
+			            	System.out.println("Scanning text...");
+			            	System.out.println("Text : "+ValToSearch);
+			            	System.out.println("Searching in data...");
+			                System.out.println("-----> Error : No data found\n");
+			                lblMsgErreur.setVisible(true);
+			                lblMsgErreur2.setVisible(false);
+			                affichePanel.setVisible(false);
+			            }else { 
+		             
+				            while(rs.next()) {
+				                user = new User(
+				                                 rs.getInt("id"),
+				                                 rs.getString("nom"),
+				                                 rs.getInt("age"),
+				                                 rs.getDate("date"),
+				                                 rs.getString("pays"),
+				                                 rs.getBoolean("covid-19"),
+				                                 rs.getInt("distance")
+				                                );
+				                usersList.add(user);
+				            }
+			            }
+		           }
+	        }catch(Exception ex){
+	            System.out.println(ex.getMessage());
+	        }
+	        
+	        return usersList;
+        	}else {
+	        	 try{
+	        		 System.out.println("Bouton Show Data : Les Dates sont séléctioné(s) : "+cboxDateA.getModel().getSelectedItem()+" et "+cboxDateB.getModel().getSelectedItem()+" dans les comboboxs, pays ='"+this.cboxPays.getModel().getSelectedItem()+"' !");
+	        		 
+	  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	  	            st = con.createStatement(); //on creer des statements pour extraire les données
+	  	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND  date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01' AND pays = '"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
+	  	            rs = st.executeQuery(searchQuery); //exécuter
+	  	            
+	  	            User user;
+	  	            
+	  	          if(isNullOrEmpty(ValToSearch)) {
+		        	   System.out.println("-----> Error : No text found\n");
+		        	   lblMsgErreur2.setVisible(true);
+		        	   affichePanel.setVisible(false);
+		           }else {
+			            if (!rs.isBeforeFirst()) {  
+			            	System.out.println("Scanning text...");
+			            	System.out.println("Text : "+ValToSearch);
+			            	System.out.println("Searching in data...");
+			                System.out.println("-----> Error : No data found\n");
+			                lblMsgErreur.setVisible(true);
+			                lblMsgErreur2.setVisible(false);
+			                affichePanel.setVisible(false);
+			            }else { 
+		             
+				            while(rs.next()) {
+				                user = new User(
+				                                 rs.getInt("id"),
+				                                 rs.getString("nom"),
+				                                 rs.getInt("age"),
+				                                 rs.getDate("date"),
+				                                 rs.getString("pays"),
+				                                 rs.getBoolean("covid-19"),
+				                                 rs.getInt("distance")
+				                                );
+				                usersList.add(user);
+				            }
+			            }
+		           }
+	        }catch(Exception ex){
+	            System.out.println(ex.getMessage());
+	        }
+	        
+	        return usersList;
+        	}
+        }
+        /*
+        if((this.cboxDateA.getModel().getSelectedItem().equals("") && this.cboxDateB.getModel().getSelectedItem().equals(""))||(this.cboxDateA.getModel().getSelectedItem().equals("") || this.cboxDateB.getModel().getSelectedItem().equals(""))){
+        	try{
+        		System.out.println("Pas de Date dans les comboboxs !");
+	        	Connection con = ConnexionJM.connecterDB();
+	            st = con.createStatement();
+	            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'";
+	            rs = st.executeQuery(searchQuery);
+	            
+	            User user;
+	            
+	           if(isNullOrEmpty(ValToSearch)) {
+	        	   System.out.println("-----> Error : No text found\n");
+	        	   lblMsgErreur2.setVisible(true);
+	        	   affichePanel.setVisible(false);
+	           }else {
+		            if (!rs.isBeforeFirst()) {  
+		            	System.out.println("Scanning text...");
+		            	System.out.println("Text : "+ValToSearch);
+		            	System.out.println("Searching in data...");
+		                System.out.println("-----> Error : No data found\n");
+		                lblMsgErreur.setVisible(true);
+		                lblMsgErreur2.setVisible(false);
+		                affichePanel.setVisible(false);
+		            }else { 
+	             
+			            while(rs.next()) {
+			                user = new User(
+			                                 rs.getInt("id"),
+			                                 rs.getString("nom"),
+			                                 rs.getInt("age"),
+			                                 rs.getDate("date"),
+			                                 rs.getString("pays"),
+			                                 rs.getBoolean("covid-19"),
+			                                 rs.getInt("distance")
+			                                );
+			                usersList.add(user);
+			            }
 		            }
-	            }
-           }
+	           }
         }catch(Exception ex){
             System.out.println(ex.getMessage());
         }
         
         return usersList;
-    }
+        
+        }else {
+        	try {
+        		System.out.println("Date A selectioné : "+cboxDateA.getModel().getSelectedItem()+" Date B selectionné"+cboxDateB.getModel().getSelectedItem());
+	        	Connection con = ConnexionJM.connecterDB();
+	            st = con.createStatement();
+	            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'";
+	            
+	            rs = st.executeQuery(searchQuery);
+	            
+	            User user;
+	            
+	           if(isNullOrEmpty(ValToSearch)) {
+	        	   System.out.println("-----> Error : No text found\n");
+	        	   lblMsgErreur2.setVisible(true);
+	        	   affichePanel.setVisible(false);
+	           }else {
+		            if (!rs.isBeforeFirst()) {  
+		            	System.out.println("Scanning text...");
+		            	System.out.println("Text : "+ValToSearch);
+		            	System.out.println("Searching in data...");
+		                System.out.println("-----> Error : No data found\n");
+		                lblMsgErreur.setVisible(true);
+		                lblMsgErreur2.setVisible(false);
+		                affichePanel.setVisible(false);
+		            }else { 
+	             
+			            while(rs.next()) {
+			                user = new User(
+			                                 rs.getInt("id"),
+			                                 rs.getString("nom"),
+			                                 rs.getInt("age"),
+			                                 rs.getDate("date"),
+			                                 rs.getString("pays"),
+			                                 rs.getBoolean("covid-19"),
+			                                 rs.getInt("distance")
+			                                );
+			                usersList.add(user);
+			            }
+		            }
+	           }
+	    }catch(Exception ex){
+	        System.out.println(ex.getMessage());
+	    }
+        return usersList;
+        }
+        */
+}    
+    
 	public void find_user(){
 		ArrayList<User> users = ListUsers2Find(textField.getText());
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
@@ -378,9 +707,48 @@ public class WinScreenTest1 extends JFrame {
        
 	}
 	
+	public void cherchePays() {
+		
+        Statement st;
+        ResultSet rs;
+		
+        try {
+        	Connection con = ConnexionJM.connecterDB();
+			st = con.createStatement();
+			String searchQuery = "SELECT DISTINCT pays FROM `user`";
+			rs = st.executeQuery(searchQuery);
+			pays[0] = "";
+			 while (rs.next()) {
+				
+				 System.out.println(rs.getString("pays"));   
+				 pays[i] = rs.getString("pays");
+				 i++;
+			 }
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}     
+	
+	public void genererAnnee() {
+		annee[0] = "";	
+		for(i=1;i<=114;i++) {
+			System.out.println(j);
+			s=String.valueOf(j);
+			annee[i] = s;	
+			j++;
+		}
+}     
 	public void clearTable() {
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
 		model.setRowCount(0);
+	}
+	
+	public void initScreen() {
+		affichePanel.setVisible(true);
+		lblMsgErreur.setVisible(false);
+		lblMsgErreur2.setVisible(false);
 	}
 	
 	public static boolean isNullOrEmpty(String str) {
