@@ -42,6 +42,7 @@ import javax.imageio.*;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTable;
+import javax.swing.JComboBox;
 
 
 public class WinScreenTest1 extends JFrame {
@@ -88,6 +89,28 @@ public class WinScreenTest1 extends JFrame {
 		JPanel boutonPanel = new JPanel();
 		boutonPanel.setBounds(24, 45, 218, 497);
 		contentPane.add(boutonPanel);
+		boutonPanel.setLayout(null);
+		boutonPanel.setBackground(new Color(0,0,0,0));
+		
+		JLabel lblTrierPar = new JLabel("Trier par :");
+		lblTrierPar.setForeground(Color.WHITE);
+		lblTrierPar.setBounds(10, 11, 98, 14);
+		boutonPanel.add(lblTrierPar);
+		
+		JButton btnNewButton = new JButton("Date");
+		btnNewButton.setBackground(Color.WHITE);
+		btnNewButton.setBounds(10, 36, 98, 34);
+		boutonPanel.add(btnNewButton);
+		
+		JButton btnNom = new JButton("Nom");
+		btnNom.setBackground(Color.WHITE);
+		btnNom.setBounds(10, 81, 98, 34);
+		boutonPanel.add(btnNom);
+		
+		JButton btnPays = new JButton("Pays");
+		btnPays.setBackground(Color.WHITE);
+		btnPays.setBounds(10, 126, 98, 34);
+		boutonPanel.add(btnPays);
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setBounds(266, 45, 616, 168);
@@ -106,9 +129,12 @@ public class WinScreenTest1 extends JFrame {
 		affichePanel.setBounds(266, 303, 616, 239);
 		contentPane.add(affichePanel);
 		affichePanel.setLayout(null);
+		affichePanel.setBackground(new Color(0,0,0,0));
+		
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 616, 238);
+		//scrollPane.setBackground(new Color(0,0,0,0));
 		affichePanel.add(scrollPane);
 		
 		table2 = new JTable();
@@ -124,12 +150,14 @@ public class WinScreenTest1 extends JFrame {
 		
 		
 		lblMsgErreur = new JLabel("Information introuvable ! Veuillez recommencer ! ");
-		lblMsgErreur.setBounds(180, 61, 322, 14);
+		lblMsgErreur.setBounds(162, 63, 322, 14);
+		lblMsgErreur.setForeground(Color.white);
 		searchPanel.add(lblMsgErreur);
 		lblMsgErreur.setVisible(false);
 		
 		lblMsgErreur2 = new JLabel("Veuillez saisir les informations dans la barre de recherche");
-		lblMsgErreur2.setBounds(115, 61, 382, 14);
+		lblMsgErreur2.setBounds(120, 63, 382, 14);
+		lblMsgErreur2.setForeground(Color.white);
 		searchPanel.add(lblMsgErreur2);
 		lblMsgErreur2.setVisible(false);
 		 
@@ -149,7 +177,7 @@ public class WinScreenTest1 extends JFrame {
 			
 		});
 		
-		btnShowAllData.setBounds(26, 84, 199, 72);
+		btnShowAllData.setBounds(26, 88, 199, 72);
 		searchPanel.add(btnShowAllData);
 		
 		JButton btnOk = new JButton("");
@@ -169,16 +197,43 @@ public class WinScreenTest1 extends JFrame {
 		});
 		btnOk.setBounds(507, 11, 97, 75);
 		searchPanel.add(btnOk);
+		String[] date = {"", "2011", "2012", "2013", "2014", "2015", "2016", "2017"}; 
+		JComboBox cboxDateA = new JComboBox(date);
+		cboxDateA.setBounds(349, 110, 85, 20);
+		searchPanel.add(cboxDateA);
+		
+		JComboBox cboxDate2 = new JComboBox(date);
+		cboxDate2.setBounds(504, 110, 85, 20);
+		searchPanel.add(cboxDate2);
+		
+		JLabel lblSelectDate = new JLabel("Date between : ");
+		lblSelectDate.setBounds(246, 113, 93, 14);
+		lblSelectDate.setForeground(Color.white);
+		searchPanel.add(lblSelectDate);
+		
+		JLabel lblAnd = new JLabel("and");
+		lblAnd.setForeground(Color.WHITE);
+		lblAnd.setBounds(456, 113, 46, 14);
+		searchPanel.add(lblAnd);
+		
+		JLabel lblPays = new JLabel("Pays :");
+		lblPays.setForeground(Color.WHITE);
+		lblPays.setBounds(246, 143, 69, 14);
+		searchPanel.add(lblPays);
+		
+		JComboBox cboxPays = new JComboBox();
+		cboxPays.setBounds(349, 140, 85, 20);
+		searchPanel.add(cboxPays);
 		
 		
 		
-		JLabel lblNewLabel = new JLabel();
+		JLabel lblBgImg = new JLabel();
 		//String path="/imgs/stars3.jpg";
-		lblNewLabel.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3-conv.jpg")));
-		lblNewLabel.setBounds(0, 0, 1019, 633);
-		contentPane.add(lblNewLabel);
+		lblBgImg.setIcon(new ImageIcon(WinScreenTest1.class.getResource("/imgs/stars3-conv.jpg")));
+		lblBgImg.setBounds(0, 0, 1019, 633);
+		contentPane.add(lblBgImg);
 		
-		boutonPanel.setVisible(false);
+	
 		affichePanel.setVisible(false);
 	
 			
@@ -262,7 +317,7 @@ public class WinScreenTest1 extends JFrame {
         try{
         	Connection con = ConnexionJM.connecterDB();
             st = con.createStatement();
-            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`, `date`) LIKE '%"+ValToSearch+"%'";
+            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'";
             rs = st.executeQuery(searchQuery);
             
             User user;
