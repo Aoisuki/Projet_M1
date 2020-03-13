@@ -592,98 +592,7 @@ public class WinScreenTest1 extends JFrame {
 	        return usersList;
         	}
         }
-        /*
-        if((this.cboxDateA.getModel().getSelectedItem().equals("") && this.cboxDateB.getModel().getSelectedItem().equals(""))||(this.cboxDateA.getModel().getSelectedItem().equals("") || this.cboxDateB.getModel().getSelectedItem().equals(""))){
-        	try{
-        		System.out.println("Pas de Date dans les comboboxs !");
-	        	Connection con = ConnexionJM.connecterDB();
-	            st = con.createStatement();
-	            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'";
-	            rs = st.executeQuery(searchQuery);
-	            
-	            User user;
-	            
-	           if(isNullOrEmpty(ValToSearch)) {
-	        	   System.out.println("-----> Error : No text found\n");
-	        	   lblMsgErreur2.setVisible(true);
-	        	   affichePanel.setVisible(false);
-	           }else {
-		            if (!rs.isBeforeFirst()) {  
-		            	System.out.println("Scanning text...");
-		            	System.out.println("Text : "+ValToSearch);
-		            	System.out.println("Searching in data...");
-		                System.out.println("-----> Error : No data found\n");
-		                lblMsgErreur.setVisible(true);
-		                lblMsgErreur2.setVisible(false);
-		                affichePanel.setVisible(false);
-		            }else { 
-	             
-			            while(rs.next()) {
-			                user = new User(
-			                                 rs.getInt("id"),
-			                                 rs.getString("nom"),
-			                                 rs.getInt("age"),
-			                                 rs.getDate("date"),
-			                                 rs.getString("pays"),
-			                                 rs.getBoolean("covid-19"),
-			                                 rs.getInt("distance")
-			                                );
-			                usersList.add(user);
-			            }
-		            }
-	           }
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        
-        return usersList;
-        
-        }else {
-        	try {
-        		System.out.println("Date A selectioné : "+cboxDateA.getModel().getSelectedItem()+" Date B selectionné"+cboxDateB.getModel().getSelectedItem());
-	        	Connection con = ConnexionJM.connecterDB();
-	            st = con.createStatement();
-	            String searchQuery = "SELECT * FROM `user` WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'";
-	            
-	            rs = st.executeQuery(searchQuery);
-	            
-	            User user;
-	            
-	           if(isNullOrEmpty(ValToSearch)) {
-	        	   System.out.println("-----> Error : No text found\n");
-	        	   lblMsgErreur2.setVisible(true);
-	        	   affichePanel.setVisible(false);
-	           }else {
-		            if (!rs.isBeforeFirst()) {  
-		            	System.out.println("Scanning text...");
-		            	System.out.println("Text : "+ValToSearch);
-		            	System.out.println("Searching in data...");
-		                System.out.println("-----> Error : No data found\n");
-		                lblMsgErreur.setVisible(true);
-		                lblMsgErreur2.setVisible(false);
-		                affichePanel.setVisible(false);
-		            }else { 
-	             
-			            while(rs.next()) {
-			                user = new User(
-			                                 rs.getInt("id"),
-			                                 rs.getString("nom"),
-			                                 rs.getInt("age"),
-			                                 rs.getDate("date"),
-			                                 rs.getString("pays"),
-			                                 rs.getBoolean("covid-19"),
-			                                 rs.getInt("distance")
-			                                );
-			                usersList.add(user);
-			            }
-		            }
-	           }
-	    }catch(Exception ex){
-	        System.out.println(ex.getMessage());
-	    }
-        return usersList;
-        }
-        */
+       
 }    
     
 	public void find_user(){
@@ -718,13 +627,14 @@ public class WinScreenTest1 extends JFrame {
 			String searchQuery = "SELECT DISTINCT pays FROM `user`";
 			rs = st.executeQuery(searchQuery);
 			pays[0] = "";
+			System.out.print("Searching country in data base : ");
 			 while (rs.next()) {
 				
-				 System.out.println(rs.getString("pays"));   
+				 System.out.print(rs.getString("pays")+" ");   
 				 pays[i] = rs.getString("pays");
 				 i++;
 			 }
-			
+			System.out.println("\n");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -733,8 +643,9 @@ public class WinScreenTest1 extends JFrame {
 	
 	public void genererAnnee() {
 		annee[0] = "";	
+		System.out.print("Generating years : ");
 		for(i=1;i<=114;i++) {
-			System.out.println(j);
+			System.out.print(j+" ");
 			s=String.valueOf(j);
 			annee[i] = s;	
 			j++;
