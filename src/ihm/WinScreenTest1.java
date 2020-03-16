@@ -260,6 +260,7 @@ public class WinScreenTest1 extends JFrame {
 		            String searchQuery = "SELECT * FROM user"; //Ici notre requêtes
 		            rs = st.executeQuery(searchQuery); //exécuter
 		            
+		            /*
 		            User user;
 		            
 		            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
@@ -273,7 +274,9 @@ public class WinScreenTest1 extends JFrame {
 		                				 rs.getInt("distance"));
 		                usersList.add(user); //ensuite ajouter user dans la liste
 		            }
+		            */
 		            
+		            usersList = addTuUsersList(rs, usersList);
 		        }catch(Exception ex){
 		            System.out.println(ex.getMessage());
 		        }
@@ -288,20 +291,8 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM user WHERE pays ='"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
-	  	            
-	  	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
-	  	            {
-	  	                user = new User( rs.getInt("id"),
-	  	                				 rs.getString("nom"),
-	  	                				 rs.getInt("age"),
-	  	                				 rs.getDate("date"), 
-	  	                				 rs.getBoolean("covid-19"),
-	  	                				 rs.getString("pays"),
-	  	                				 rs.getInt("distance"));
-	  	                usersList.add(user); //ensuite ajouter user dans la liste
-	  	            }
-	  	            
+	  	           
+	  	            usersList = addTuUsersList(rs, usersList);
 	  	        }catch(Exception ex){
 	  	            System.out.println(ex.getMessage());
 	  	        }
@@ -319,21 +310,8 @@ public class WinScreenTest1 extends JFrame {
 	 	            st = con.createStatement(); //on creer des statements pour extraire les données
 	 	            String searchQuery = "SELECT * FROM user WHERE date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'"; //Ici notre requêtes
 	 	            rs = st.executeQuery(searchQuery); //exécuter
-	 	            
-	 	            User user;
-	 	            
-	 	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
-	 	            {
-	 	                user = new User( rs.getInt("id"),
-	 	                				 rs.getString("nom"),
-	 	                				 rs.getInt("age"),
-	 	                				 rs.getDate("date"),
-	 	                				 rs.getBoolean("covid-19"),
-	 	                				 rs.getString("pays"),
-	 	                				 rs.getInt("distance"));
-	 	                usersList.add(user); //ensuite ajouter user dans la liste
-	 	            }
-	 	            
+	 	           
+	 	            usersList = addTuUsersList(rs, usersList);
 	 	        }catch(Exception ex){
 	 	            System.out.println(ex.getMessage());
 	 	        }
@@ -348,20 +326,8 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM user WHERE date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01' AND pays = '"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
-	  	            
-	  	            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
-	  	            {
-	  	                user = new User( rs.getInt("id"),
-	  	                				 rs.getString("nom"),
-	  	                				 rs.getInt("age"),
-	  	                				 rs.getDate("date"),
-	  	                				 rs.getBoolean("covid-19"),
-	  	                				 rs.getString("pays"),
-	  	                				 rs.getInt("distance"));
-	  	                usersList.add(user); //ensuite ajouter user dans la liste
-	  	            }
-	  	            
+	  	           
+	  	          usersList = addTuUsersList(rs, usersList);
 	  	        }catch(Exception ex){
 	  	            System.out.println(ex.getMessage());
 	  	        }
@@ -370,6 +336,30 @@ public class WinScreenTest1 extends JFrame {
         	}
         }
 	}
+	
+	public ArrayList<User> addTuUsersList (ResultSet rs, ArrayList<User> usersList){
+		  User user;
+            
+           
+                try { 
+                	System.out.println("Adding values to instance User...");
+	                while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+	                {
+						user = new User( rs.getInt("id"),
+										 rs.getString("nom"),
+										 rs.getInt("age"),
+										 rs.getDate("date"),
+										 rs.getBoolean("covid-19"),
+										 rs.getString("pays"),
+										 rs.getInt("distance")); 
+						usersList.add(user); //ensuite ajouter user dans la liste
+	                }
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+              	return usersList;
+            }
 	
 	public void showUserData(){ //afficher les données récupérés dans JTable
 		ArrayList<User> users = ListUsers();
@@ -408,7 +398,7 @@ public class WinScreenTest1 extends JFrame {
 		            st = con.createStatement(); //on creer des statements pour extraire les données
 		            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%'"; //Ici notre requêtes
 		            rs = st.executeQuery(searchQuery); //exécuter
-		            
+		            /*
 		            User user;
 		            
 		            if(isNullOrEmpty(ValToSearch)) {
@@ -440,6 +430,8 @@ public class WinScreenTest1 extends JFrame {
 					            }
 				            }
 			           }
+			           */
+		            usersList = addTuUsersListWithSearchBar(rs,usersList,ValToSearch);
 		        }catch(Exception ex){
 		            System.out.println(ex.getMessage());
 		        }
@@ -454,37 +446,8 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND pays ='"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
-	  	            
-	  	          if(isNullOrEmpty(ValToSearch)) {
-		        	   System.out.println("-----> Error : No text found\n");
-		        	   lblMsgErreur2.setVisible(true);
-		        	   affichePanel.setVisible(false);
-		           }else {
-			            if (!rs.isBeforeFirst()) {  
-			            	System.out.println("Scanning text...");
-			            	System.out.println("Text : "+ValToSearch);
-			            	System.out.println("Searching in data...");
-			                System.out.println("-----> Error : No data found\n");
-			                lblMsgErreur.setVisible(true);
-			                lblMsgErreur2.setVisible(false);
-			                affichePanel.setVisible(false);
-			            }else { 
-		             
-				            while(rs.next()) {
-				                user = new User(
-				                                 rs.getInt("id"),
-				                                 rs.getString("nom"),
-				                                 rs.getInt("age"),
-				                                 rs.getDate("date"),
-				                                 rs.getBoolean("covid-19"),
-				                                 rs.getString("pays"),
-				                                 rs.getInt("distance")
-				                                );
-				                usersList.add(user);
-				            }
-			            }
-		           }
+	  	           
+	  	          usersList = addTuUsersListWithSearchBar(rs,usersList,ValToSearch);
 	        }catch(Exception ex){
 	            System.out.println(ex.getMessage());
 	        }
@@ -503,37 +466,8 @@ public class WinScreenTest1 extends JFrame {
 	 	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-12-31'"; //Ici notre requêtes
 	 	            rs = st.executeQuery(searchQuery); //exécuter
 	 	            
-	 	            User user;
-	 	            
-	 	           if(isNullOrEmpty(ValToSearch)) {
-		        	   System.out.println("-----> Error : No text found\n");
-		        	   lblMsgErreur2.setVisible(true);
-		        	   affichePanel.setVisible(false);
-		           }else {
-			            if (!rs.isBeforeFirst()) {  
-			            	System.out.println("Scanning text...");
-			            	System.out.println("Text : "+ValToSearch);
-			            	System.out.println("Searching in data...");
-			                System.out.println("-----> Error : No data found\n");
-			                lblMsgErreur.setVisible(true);
-			                lblMsgErreur2.setVisible(false);
-			                affichePanel.setVisible(false);
-			            }else { 
-		             
-				            while(rs.next()) {
-				                user = new User(
-				                                 rs.getInt("id"),
-				                                 rs.getString("nom"),
-				                                 rs.getInt("age"),
-				                                 rs.getDate("date"),
-				                                 rs.getBoolean("covid-19"),
-				                                 rs.getString("pays"),
-				                                 rs.getInt("distance")
-				                                );
-				                usersList.add(user);
-				            }
-			            }
-		           }
+	 	           
+	 	            usersList = addTuUsersListWithSearchBar(rs,usersList,ValToSearch);
 	        }catch(Exception ex){
 	            System.out.println(ex.getMessage());
 	        }
@@ -547,38 +481,8 @@ public class WinScreenTest1 extends JFrame {
 	  	            st = con.createStatement(); //on creer des statements pour extraire les données
 	  	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND  date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01' AND pays = '"+this.cboxPays.getModel().getSelectedItem()+"'"; //Ici notre requêtes
 	  	            rs = st.executeQuery(searchQuery); //exécuter
-	  	            
-	  	            User user;
-	  	            
-	  	          if(isNullOrEmpty(ValToSearch)) {
-		        	   System.out.println("-----> Error : No text found\n");
-		        	   lblMsgErreur2.setVisible(true);
-		        	   affichePanel.setVisible(false);
-		           }else {
-			            if (!rs.isBeforeFirst()) {  
-			            	System.out.println("Scanning text...");
-			            	System.out.println("Text : "+ValToSearch);
-			            	System.out.println("Searching in data...");
-			                System.out.println("-----> Error : No data found\n");
-			                lblMsgErreur.setVisible(true);
-			                lblMsgErreur2.setVisible(false);
-			                affichePanel.setVisible(false);
-			            }else { 
-		             
-				            while(rs.next()) {
-				                user = new User(
-				                                 rs.getInt("id"),
-				                                 rs.getString("nom"),
-				                                 rs.getInt("age"),
-				                                 rs.getDate("date"),
-				                                 rs.getBoolean("covid-19"),
-				                                 rs.getString("pays"),
-				                                 rs.getInt("distance")
-				                                );
-				                usersList.add(user);
-				            }
-			            }
-		           }
+	  	           
+	  	            usersList = addTuUsersListWithSearchBar(rs,usersList,ValToSearch);
 	        }catch(Exception ex){
 	            System.out.println(ex.getMessage());
 	        }
@@ -588,7 +492,45 @@ public class WinScreenTest1 extends JFrame {
         }
        
 }  	/*******************************************************************************************************************************/
-    
+	public ArrayList<User> addTuUsersListWithSearchBar(ResultSet rs, ArrayList<User> usersList, String ValToSearch){
+		User user;
+	       try {
+	    	   
+	          if(isNullOrEmpty(ValToSearch)) {
+	      	   System.out.println("-----> Error : No text found\n");
+	      	   lblMsgErreur2.setVisible(true);
+	      	   affichePanel.setVisible(false);
+	         }else {
+		            if (!rs.isBeforeFirst()) {  
+		            	System.out.println("Scanning text...");
+		            	System.out.println("Text : "+ValToSearch);
+		            	System.out.println("Searching in data...");
+		                System.out.println("-----> Error : No data found\n");
+		                lblMsgErreur.setVisible(true);
+		                lblMsgErreur2.setVisible(false);
+		                affichePanel.setVisible(false);
+		            }else { 
+		            	System.out.println("Adding values to instance User...");
+			            while(rs.next()) {
+			                user = new User(
+			                                 rs.getInt("id"),
+			                                 rs.getString("nom"),
+			                                 rs.getInt("age"),
+			                                 rs.getDate("date"),
+			                                 rs.getBoolean("covid-19"),
+			                                 rs.getString("pays"),
+			                                 rs.getInt("distance")
+			                                );
+			                usersList.add(user);
+			            }
+		            }
+	          }
+	       }catch(Exception ex){
+	            System.out.println(ex.getMessage());
+	        }
+	       return usersList;
+	}
+	
 	public void showUserSearch(){
 		ArrayList<User> users = ListUserSearch(textField.getText());
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
