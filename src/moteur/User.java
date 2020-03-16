@@ -12,7 +12,7 @@ public class User {
     private String pays;
     private int distance;
     
-    public User(int Id,String Name,int Age, Date Date, String Pays, boolean Covid19, int Distance)
+    public User(int Id,String Name,int Age, Date Date, boolean Covid19,String Pays, int Distance)
     {
         this.id = Id;
         this.name = Name;

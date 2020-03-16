@@ -268,8 +268,8 @@ public class WinScreenTest1 extends JFrame {
 		                				 rs.getString("nom"),
 		                				 rs.getInt("age"),
 		                				 rs.getDate("date"),
-		                				 rs.getString("pays"),
 		                				 rs.getBoolean("covid-19"),
+		                				 rs.getString("pays"),
 		                				 rs.getInt("distance"));
 		                usersList.add(user); //ensuite ajouter user dans la liste
 		            }
@@ -295,9 +295,9 @@ public class WinScreenTest1 extends JFrame {
 	  	                user = new User( rs.getInt("id"),
 	  	                				 rs.getString("nom"),
 	  	                				 rs.getInt("age"),
-	  	                				 rs.getDate("date"),
-	  	                				 rs.getString("pays"),
+	  	                				 rs.getDate("date"), 
 	  	                				 rs.getBoolean("covid-19"),
+	  	                				 rs.getString("pays"),
 	  	                				 rs.getInt("distance"));
 	  	                usersList.add(user); //ensuite ajouter user dans la liste
 	  	            }
@@ -328,8 +328,8 @@ public class WinScreenTest1 extends JFrame {
 	 	                				 rs.getString("nom"),
 	 	                				 rs.getInt("age"),
 	 	                				 rs.getDate("date"),
-	 	                				 rs.getString("pays"),
 	 	                				 rs.getBoolean("covid-19"),
+	 	                				 rs.getString("pays"),
 	 	                				 rs.getInt("distance"));
 	 	                usersList.add(user); //ensuite ajouter user dans la liste
 	 	            }
@@ -356,8 +356,8 @@ public class WinScreenTest1 extends JFrame {
 	  	                				 rs.getString("nom"),
 	  	                				 rs.getInt("age"),
 	  	                				 rs.getDate("date"),
-	  	                				 rs.getString("pays"),
 	  	                				 rs.getBoolean("covid-19"),
+	  	                				 rs.getString("pays"),
 	  	                				 rs.getInt("distance"));
 	  	                usersList.add(user); //ensuite ajouter user dans la liste
 	  	            }
@@ -381,9 +381,9 @@ public class WinScreenTest1 extends JFrame {
             row[0] = users.get(i).getId();
             row[1] = users.get(i).getName();
             row[2] = users.get(i).getAge();
-            row[3] = users.get(i).getDate();    
-            row[4] = users.get(i).getPays();  
-            row[5] = users.get(i).getCovid19();
+            row[3] = users.get(i).getDate();  
+            row[4] = users.get(i).getCovid19();
+            row[5] = users.get(i).getPays();  
             row[6] = users.get(i).getDistance();  
             model.addRow(row);
         }
@@ -432,8 +432,8 @@ public class WinScreenTest1 extends JFrame {
 					                                 rs.getString("nom"),
 					                                 rs.getInt("age"),
 					                                 rs.getDate("date"),
-					                                 rs.getString("pays"),
 					                                 rs.getBoolean("covid-19"),
+					                                 rs.getString("pays"),
 					                                 rs.getInt("distance")
 					                                );
 					                usersList.add(user);
@@ -477,8 +477,8 @@ public class WinScreenTest1 extends JFrame {
 				                                 rs.getString("nom"),
 				                                 rs.getInt("age"),
 				                                 rs.getDate("date"),
-				                                 rs.getString("pays"),
 				                                 rs.getBoolean("covid-19"),
+				                                 rs.getString("pays"),
 				                                 rs.getInt("distance")
 				                                );
 				                usersList.add(user);
@@ -526,8 +526,8 @@ public class WinScreenTest1 extends JFrame {
 				                                 rs.getString("nom"),
 				                                 rs.getInt("age"),
 				                                 rs.getDate("date"),
-				                                 rs.getString("pays"),
 				                                 rs.getBoolean("covid-19"),
+				                                 rs.getString("pays"),
 				                                 rs.getInt("distance")
 				                                );
 				                usersList.add(user);
@@ -571,8 +571,8 @@ public class WinScreenTest1 extends JFrame {
 				                                 rs.getString("nom"),
 				                                 rs.getInt("age"),
 				                                 rs.getDate("date"),
-				                                 rs.getString("pays"),
 				                                 rs.getBoolean("covid-19"),
+				                                 rs.getString("pays"),
 				                                 rs.getInt("distance")
 				                                );
 				                usersList.add(user);
@@ -599,9 +599,9 @@ public class WinScreenTest1 extends JFrame {
             row[0] = users.get(i).getId();
             row[1] = users.get(i).getName();
             row[2] = users.get(i).getAge();
-            row[3] = users.get(i).getDate();    
-            row[4] = users.get(i).getPays();  
-            row[5] = users.get(i).getCovid19(); 
+            row[3] = users.get(i).getDate();
+            row[4] = users.get(i).getCovid19(); 
+            row[5] = users.get(i).getPays();  
             row[6] = users.get(i).getDistance();  
             model.addRow(row);
         }
