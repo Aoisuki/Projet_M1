@@ -48,7 +48,7 @@ import javax.swing.JComboBox;
 public class WinScreenTest1 extends JFrame {
 
 	private int i = 1;
-	private int j = 1903;
+	private int j = 1903; //la date commence en 1903
 	private String s;
 	private JPanel contentPane;
 	private JTextField textField;
@@ -61,7 +61,8 @@ public class WinScreenTest1 extends JFrame {
 	private JComboBox cboxDateB = new JComboBox();
 	private JComboBox cboxPays = new JComboBox();
 	private String pays[] = new String[10];
-	private String annee[] = new String[115];
+	private String annee[] = new String[120];
+	private String title[] = new String[7]; //changer la taille max pour plus de valeur
     // read a text file from resources folder that is parallel to src folder
    
 	/**
@@ -85,8 +86,10 @@ public class WinScreenTest1 extends JFrame {
 	 * @throws URISyntaxException 
 	 */
 	public WinScreenTest1() {
-		cherchePays();
-		genererAnnee();
+		cherchePays(); //appel a la fonction pour chercher les pays dans la BDD
+		genererAnnee(); //appel a la fonction pour generer la date a partir de 1903
+		chercheNomDuChamp(); //chercher les champs pour ensuite afficher sur le tableau
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1025, 662);
@@ -111,12 +114,12 @@ public class WinScreenTest1 extends JFrame {
 		btnNewButton.setBounds(10, 36, 98, 34);
 		boutonPanel.add(btnNewButton);
 		
-		JButton btnNom = new JButton("Nom");
+		JButton btnNom = new JButton("Name");
 		btnNom.setBackground(Color.WHITE);
 		btnNom.setBounds(10, 81, 98, 34);
 		boutonPanel.add(btnNom);
 		
-		JButton btnPays = new JButton("Pays");
+		JButton btnPays = new JButton("Country");
 		btnPays.setBackground(Color.WHITE);
 		btnPays.setBounds(10, 126, 98, 34);
 		boutonPanel.add(btnPays);
@@ -146,13 +149,12 @@ public class WinScreenTest1 extends JFrame {
 		//scrollPane.setBackground(new Color(0,0,0,0));
 		affichePanel.add(scrollPane);
 		
+		
 		table2 = new JTable();
 		table2.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
-				"Id", "Nom", "Age", "Date", "Pays", "Covid-19", "Distance"
-			}
+			title
 		));
 		scrollPane.setViewportView(table2);
 		
@@ -176,9 +178,9 @@ public class WinScreenTest1 extends JFrame {
 		btnShowAllData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				initScreen();
-				clearTable(); 
-				show_user();
+				initScreen(); //enlever les messages d'erreur 
+				clearTable(); //initialisé le tableau 
+				showUserData(); //afficher tout les informations dans la BDD
 					
 			}
 			
@@ -195,15 +197,14 @@ public class WinScreenTest1 extends JFrame {
 				
 				initScreen();
 				clearTable(); 
-				find_user();
+				showUserSearch(); //afficher les informations cherché
 				
 			}
 			
 		});
 		btnOk.setBounds(507, 11, 97, 75);
 		searchPanel.add(btnOk);
-		//String[] date = {"", "2006","2007","2008","2009","2010","2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"}; 
-		cboxDateA = new JComboBox(annee);
+		cboxDateA = new JComboBox(annee); //annee est generer par un boucle for 
 		cboxDateA.setBounds(349, 110, 85, 20);
 		searchPanel.add(cboxDateA);
 		
@@ -221,7 +222,7 @@ public class WinScreenTest1 extends JFrame {
 		lblAnd.setBounds(456, 113, 46, 14);
 		searchPanel.add(lblAnd);
 		
-		JLabel lblPays = new JLabel("Pays :");
+		JLabel lblPays = new JLabel("Country :");
 		lblPays.setForeground(Color.WHITE);
 		lblPays.setBounds(246, 143, 69, 14);
 		searchPanel.add(lblPays);
@@ -241,13 +242,6 @@ public class WinScreenTest1 extends JFrame {
 	
 		affichePanel.setVisible(false);
 	
-			
-			
-			
-			
-
-
-		
 	}
 	
 	//une méthode pour stocker les Users, on utilise ici une ArrayList, chaque instance "User" créé sera insérer dans la liste "usersList"
@@ -377,7 +371,7 @@ public class WinScreenTest1 extends JFrame {
         }
 	}
 	
-	public void show_user(){ //afficher les données récupérés dans JTable
+	public void showUserData(){ //afficher les données récupérés dans JTable
 		ArrayList<User> users = ListUsers();
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
 		Object[] row = new Object[7];
@@ -399,7 +393,7 @@ public class WinScreenTest1 extends JFrame {
 	
 	/*******************************************************************************************************************************/
 	
-	public ArrayList<User> ListUsers2Find(String ValToSearch)
+	public ArrayList<User> ListUserSearch(String ValToSearch)
     {
         ArrayList<User> usersList = new ArrayList<User>();
         
@@ -506,7 +500,7 @@ public class WinScreenTest1 extends JFrame {
 		        		
 	 	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
 	 	            st = con.createStatement(); //on creer des statements pour extraire les données
-	 	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-01-01'"; //Ici notre requêtes
+	 	            String searchQuery = "SELECT * FROM user WHERE CONCAT(`id`, `nom`, `age`) LIKE '%"+ValToSearch+"%' AND date BETWEEN '"+cboxDateA.getModel().getSelectedItem()+"-01-01' AND '"+cboxDateB.getModel().getSelectedItem()+"-12-31'"; //Ici notre requêtes
 	 	            rs = st.executeQuery(searchQuery); //exécuter
 	 	            
 	 	            User user;
@@ -593,10 +587,10 @@ public class WinScreenTest1 extends JFrame {
         	}
         }
        
-}    
+}  	/*******************************************************************************************************************************/
     
-	public void find_user(){
-		ArrayList<User> users = ListUsers2Find(textField.getText());
+	public void showUserSearch(){
+		ArrayList<User> users = ListUserSearch(textField.getText());
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
 		Object[] row = new Object[7];
         
@@ -624,7 +618,7 @@ public class WinScreenTest1 extends JFrame {
         try {
         	Connection con = ConnexionJM.connecterDB();
 			st = con.createStatement();
-			String searchQuery = "SELECT DISTINCT pays FROM `user`";
+			String searchQuery = "SELECT DISTINCT pays FROM `user`"; 
 			rs = st.executeQuery(searchQuery);
 			pays[0] = "";
 			System.out.print("Searching country in data base : ");
@@ -641,10 +635,58 @@ public class WinScreenTest1 extends JFrame {
 		}
 	}     
 	
+	public void chercheNomDuChamp() {
+		int j = 0;
+		Connection con = ConnexionJM.connecterDB();
+		try {
+			DatabaseMetaData dmd = con.getMetaData();
+			ResultSet rs = dmd.getTables(con.getCatalog(),null,"%",null);
+			
+			
+			ResultSet resultat = dmd.getColumns(con.getCatalog(),null,"user", "%"); 
+			 System.out.println("###################################");  
+			//affichage des informations 
+			ResultSetMetaData rsmd = resultat.getMetaData();  
+			
+			/*
+			while(resultat.next()){ 
+				
+				for(int k=1; k<rsmd.getColumnCount(); k++){  //afficher tout les informations du champs dans la BDD
+					String col = rsmd.getColumnName(k+1); 
+					Object val = resultat.getObject(k+1); 
+					System.out.println(col+" = "+val); 
+				} 
+			}
+			*/
+			System.out.println("Insertion en cours...");
+			while(resultat.next()){ 
+			    for(int i=3; i<rsmd.getColumnCount(); i=i+21){  //on voulait que le nom du champs, le 1er commence a partir de la 3ème ligne et le (n+1)-ème commence 21 ligne apres le n, d'ou i=i+21
+				//String col = rsmd.getColumnName(i+1); 
+				Object val = resultat.getObject(i+1); 
+				System.out.println("title["+j+"] = "+val); 
+				String s = val.toString();
+				title[j] = s;
+				j++;
+			    } 
+			}
+			 System.out.println("###################################"); 
+			/*while(rs.next()){ 
+				   System.out.println("###################################"); 
+				   for(int i=0; i<rs.getMetaData().getColumnCount();i++){ 
+				      String nomColonne = rs.getMetaData().getColumnName(i+1); 
+				      Object valeurColonne = rs.getObject(i+1); 
+				      System.out.println(nomColonne+" = "+valeurColonne); 
+				   } 
+			}*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void genererAnnee() {
 		annee[0] = "";	
 		System.out.print("Generating years : ");
-		for(i=1;i<=114;i++) {
+		for(i=1;i<=119;i++) {
 			System.out.print(j+" ");
 			s=String.valueOf(j);
 			annee[i] = s;	
