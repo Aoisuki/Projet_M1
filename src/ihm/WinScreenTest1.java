@@ -54,6 +54,8 @@ public class WinScreenTest1 extends JFrame {
 	private JTextField textField;
 	private JScrollPane scrollPane;
 	private JTable table2 = new JTable();
+	private JTable table3 = new JTable();
+	private JTable table4 = new JTable();
 	private JLabel lblMsgErreur = new JLabel();
 	private JLabel lblMsgErreur2 = new JLabel();
 	private JPanel affichePanel = new JPanel();
@@ -166,8 +168,9 @@ public class WinScreenTest1 extends JFrame {
 		btnSearchBestPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				initScreen(); //enlever les messages d'erreur 
-				clearTable(); //initialisé le tableau 
-				showTrierData(10);
+				clearTable2(); //initialisé le tableau 
+				//showTrierData(10);
+				showBestStat(10);
 			}
 		});
 		btnSearchBestPlayer.setBackground(Color.WHITE);
@@ -178,8 +181,8 @@ public class WinScreenTest1 extends JFrame {
 		btnSearchBestCountry.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				initScreen(); //enlever les messages d'erreur 
-				clearTable(); //initialisé le tableau 
-				showTrierData(11);
+				clearTable3(); //initialisé le tableau 
+				showBestStat(11);
 			}
 		});
 		btnSearchBestCountry.setBackground(Color.WHITE);
@@ -278,9 +281,26 @@ public class WinScreenTest1 extends JFrame {
 			},
 			title
 		));
-		scrollPane.setViewportView(table2);
+		//scrollPane.setViewportView(table2);
 		
+		table3 = new JTable();
+		table3.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+					"Name", "Country", "Time(s)"
+				}
+		));
+		//scrollPane.setViewportView(table3);
 		
+		table4 = new JTable();
+		table4.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+					"Top", "Country", "Time(s)"
+				}
+		));
 		
 		lblMsgErreur = new JLabel("Information introuvable ! Veuillez recommencer ! ");
 		lblMsgErreur.setBounds(162, 63, 322, 14);
@@ -702,6 +722,7 @@ public class WinScreenTest1 extends JFrame {
             model.addRow(row);
         }
        // table2.setModel(model);
+        scrollPane.setViewportView(table2);
        
 	}
 	
@@ -724,9 +745,45 @@ public class WinScreenTest1 extends JFrame {
              row[8] = users.get(i).getWinnerCountry(); 
             model.addRow(row);
         }
-       // table2.setModel(model);
+        table2.setModel(model);
+        scrollPane.setViewportView(table2);
        
 	}
+	
+	public void showBestStat(int a){
+		int numInstruction = a;
+			if(numInstruction == 10) {
+			ArrayList<User> users = ListUsersTrier(10);
+			DefaultTableModel model = (DefaultTableModel)table3.getModel();
+			Object[] row = new Object[2];
+			  for(int i = 0; i < users.size(); i++) 
+		        {
+		        	 row[0] = users.get(i).getWinner();
+		             row[1] = users.get(i).getWinnerCountry();
+		             //row[2] = nb de victoire
+		             model.addRow(row);
+		        }
+			 table3.setModel(model);
+			 scrollPane.setViewportView(table3);
+			 
+		}else if(numInstruction == 11){
+			ArrayList<User> users = ListUsersTrier(11);
+			DefaultTableModel model = (DefaultTableModel)table4.getModel();
+			Object[] row = new Object[2];
+			  for(int i = 0; i < users.size(); i++) 
+		        {
+				  	 row[0] = i+1;
+		        	 row[1] = users.get(i).getWinnerCountry();
+		        	  //row[2] = nb de victoire
+		             model.addRow(row);
+		        }
+			 table4.setModel(model);
+			 scrollPane.setViewportView(table4);
+		}else {
+			System.out.println("Erreur dans le code ! Fait attention au numéro d'instruction");
+		}
+	}
+	
 	
 	/*******************************************************************************************************************************/
 	
@@ -904,6 +961,7 @@ public class WinScreenTest1 extends JFrame {
         }
         
         table2.setModel(model);
+        scrollPane.setViewportView(table2);
        
 	}
 	
@@ -993,8 +1051,20 @@ public class WinScreenTest1 extends JFrame {
 	public void clearTable() {
 		DefaultTableModel model = (DefaultTableModel)table2.getModel();
 		model.setRowCount(0);
+	
 	}
 	
+	public void clearTable2() {
+		DefaultTableModel model = (DefaultTableModel)table3.getModel();
+		model.setRowCount(0);
+	
+	}
+	
+	public void clearTable3() {
+		DefaultTableModel model = (DefaultTableModel)table4.getModel();
+		model.setRowCount(0);
+	
+	}
 	public void initScreen() {
 		affichePanel.setVisible(true);
 		lblMsgErreur.setVisible(false);
