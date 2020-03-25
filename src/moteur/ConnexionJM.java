@@ -30,7 +30,7 @@ public class ConnexionJM {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				System.out.println("Driver marche !");
-				String url="jdbc:mysql://localhost/test?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+				String url="jdbc:mysql://localhost/projet_m1?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
 				String user="root";
 				String pw="";
 				

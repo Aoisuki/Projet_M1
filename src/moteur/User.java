@@ -5,22 +5,33 @@ import java.sql.Date;
 public class User {
 	
 	private int id;
+	/*
     private String name;
     private int age;
     private Date date;
     private boolean covid19;
     private String pays;
     private int distance;
-    
-    public User(int Id,String Name,int Age, Date Date, boolean Covid19,String Pays, int Distance)
+    */
+	private String stage;
+	private Date date;
+	private float distance;
+	private String origin;
+	private String destination;
+	private String type;
+	private String winner;
+	private String winner_country;
+    public User(int Id,String Stage, Date Date, float Distance, String Origin, String Destination, String Type, String Winner, String Winner_Country)
     {
         this.id = Id;
-        this.name = Name;
-        this.age = Age;
+        this.stage = Stage;
         this.date = Date;
-        this.pays = Pays;
-        this.covid19 = Covid19;
         this.distance = Distance;
+        this.origin = Origin;
+        this.destination = Destination;
+        this.type = Type;
+        this.winner = Winner;
+        this.winner_country = Winner_Country;
     }
     
     public int getId()
@@ -28,32 +39,36 @@ public class User {
         return id;
     }
     
-    public String getName()
-    {
-        return name;
-    }
-    
-    public int getAge()
-    {
-        return age;
-    }
-    public Date getDate() {
-    	return date;
-    }
-    
-   public String getPays() {
-	   return pays;
+   public String getStage() {
+	   return stage;
    }
    
-   public String getCovid19() {
-	   if(covid19 == true) {
-		   return "Oui";
-	   }else {
-		   	return "Non";
-	   }
+   public Date getDate() {
+	   return date;
    }
    
-   public int getDistance() {
+   public float getDistance() {
 	   return distance;
    }
+   
+   public String getOrigin() {
+	   return origin;
+   }
+
+   public String getDestination() {
+	   return destination;
+   }
+   
+   public String getType() {
+	   return type;
+   }
+   
+   public String getWinner() {
+	   return winner;
+   }
+   
+   public String getWinnerCountry() {
+	   return winner_country;
+   }
+
 }
