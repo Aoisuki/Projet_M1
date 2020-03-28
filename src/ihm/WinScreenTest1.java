@@ -24,6 +24,7 @@ import moteur.ConnexionJM;
 import moteur.FindFunction;
 import moteur.ImagePanel;
 import moteur.User;
+import moteur.User2;
 
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -94,7 +95,7 @@ public class WinScreenTest1 extends JFrame {
 		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1025, 662);
+		setBounds(100, 100, 1023, 662);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -108,7 +109,7 @@ public class WinScreenTest1 extends JFrame {
 		
 		JLabel lblTrierPar = new JLabel("Sort by :");
 		lblTrierPar.setForeground(Color.WHITE);
-		lblTrierPar.setBounds(10, 11, 98, 14);
+		lblTrierPar.setBounds(83, 60, 98, 14);
 		boutonPanel.add(lblTrierPar);
 		
 		JButton btnTrierDateDESC = new JButton("Date (DESC)");
@@ -120,7 +121,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierDateDESC.setBackground(Color.WHITE);
-		btnTrierDateDESC.setBounds(10, 36, 98, 34);
+		btnTrierDateDESC.setBounds(10, 109, 192, 34);
 		boutonPanel.add(btnTrierDateDESC);
 		
 		JButton btnTrierDateASC = new JButton("Date (ASC)");
@@ -132,7 +133,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierDateASC.setBackground(Color.WHITE);
-		btnTrierDateASC.setBounds(129, 36, 98, 34);
+		btnTrierDateASC.setBounds(10, 154, 192, 34);
 		boutonPanel.add(btnTrierDateASC);
 		
 		JButton btnTrierNom = new JButton("Name");
@@ -144,7 +145,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierNom.setBackground(Color.WHITE);
-		btnTrierNom.setBounds(10, 81, 98, 34);
+		btnTrierNom.setBounds(10, 199, 192, 34);
 		boutonPanel.add(btnTrierNom);
 		
 		JButton btnTrierPays = new JButton("Country");
@@ -156,38 +157,8 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierPays.setBackground(Color.WHITE);
-		btnTrierPays.setBounds(129, 81, 98, 34);
+		btnTrierPays.setBounds(10, 244, 192, 34);
 		boutonPanel.add(btnTrierPays);
-		
-		JLabel lblRecordMeilleur = new JLabel("Best...");
-		lblRecordMeilleur.setForeground(Color.WHITE);
-		lblRecordMeilleur.setBounds(10, 264, 98, 14);
-		boutonPanel.add(lblRecordMeilleur);
-		
-		JButton btnSearchBestPlayer = new JButton("Best Player");
-		btnSearchBestPlayer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				initScreen(); //enlever les messages d'erreur 
-				clearTable2(); //initialisé le tableau 
-				//showTrierData(10);
-				showBestStat(10);
-			}
-		});
-		btnSearchBestPlayer.setBackground(Color.WHITE);
-		btnSearchBestPlayer.setBounds(41, 347, 133, 34);
-		boutonPanel.add(btnSearchBestPlayer);
-		
-		JButton btnSearchBestCountry = new JButton("Top 5 Country");
-		btnSearchBestCountry.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				initScreen(); //enlever les messages d'erreur 
-				clearTable3(); //initialisé le tableau 
-				showBestStat(11);
-			}
-		});
-		btnSearchBestCountry.setBackground(Color.WHITE);
-		btnSearchBestCountry.setBounds(41, 392, 133, 34);
-		boutonPanel.add(btnSearchBestCountry);
 		
 		JButton btnTrierType = new JButton("Type");
 		btnTrierType.addActionListener(new ActionListener() {
@@ -198,7 +169,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierType.setBackground(Color.WHITE);
-		btnTrierType.setBounds(10, 126, 98, 34);
+		btnTrierType.setBounds(10, 334, 192, 34);
 		boutonPanel.add(btnTrierType);
 		
 		JButton btnTrierOrigin = new JButton("Origin");
@@ -210,7 +181,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierOrigin.setBackground(Color.WHITE);
-		btnTrierOrigin.setBounds(129, 126, 98, 34);
+		btnTrierOrigin.setBounds(10, 289, 192, 34);
 		boutonPanel.add(btnTrierOrigin);
 		
 		JButton btnTrierDesti = new JButton("Destination");
@@ -222,7 +193,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierDesti.setBackground(Color.WHITE);
-		btnTrierDesti.setBounds(10, 171, 98, 34);
+		btnTrierDesti.setBounds(10, 379, 192, 34);
 		boutonPanel.add(btnTrierDesti);
 		
 		JButton btnTrierDistanceDESC = new JButton("Distance (D)");
@@ -234,7 +205,7 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnTrierDistanceDESC.setBackground(Color.WHITE);
-		btnTrierDistanceDESC.setBounds(10, 219, 98, 34);
+		btnTrierDistanceDESC.setBounds(10, 424, 192, 34);
 		boutonPanel.add(btnTrierDistanceDESC);
 		
 		JButton btnDistanceASC = new JButton("Distance (A)");
@@ -246,11 +217,11 @@ public class WinScreenTest1 extends JFrame {
 			}
 		});
 		btnDistanceASC.setBackground(Color.WHITE);
-		btnDistanceASC.setBounds(129, 219, 98, 34);
+		btnDistanceASC.setBounds(10, 477, 192, 34);
 		boutonPanel.add(btnDistanceASC);
 		
 		JPanel searchPanel = new JPanel();
-		searchPanel.setBounds(266, 45, 616, 168);
+		searchPanel.setBounds(285, 45, 666, 239);
 		contentPane.add(searchPanel);
 		searchPanel.setLayout(null);
 		searchPanel.setBackground(new Color(0,0,0,0)); //Background panel tranparent !! <3 contraire : il faut mettre Color(0,0,0,100)
@@ -259,8 +230,6 @@ public class WinScreenTest1 extends JFrame {
 		textField.setBounds(26, 11, 471, 50);
 		searchPanel.add(textField);
 		textField.setColumns(10);
-		
-		
 		
 		
 		affichePanel.setBounds(266, 303, 729, 239);
@@ -288,7 +257,7 @@ public class WinScreenTest1 extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-					"Name", "Country", "Time(s)"
+					"Top", "Name", "Country", "Time(s)"
 				}
 		));
 		//scrollPane.setViewportView(table3);
@@ -328,7 +297,7 @@ public class WinScreenTest1 extends JFrame {
 			
 		});
 		
-		btnShowAllData.setBounds(26, 88, 199, 72);
+		btnShowAllData.setBounds(392, 153, 212, 72);
 		searchPanel.add(btnShowAllData);
 		
 		JButton btnOk = new JButton("");
@@ -347,33 +316,31 @@ public class WinScreenTest1 extends JFrame {
 		btnOk.setBounds(507, 11, 97, 75);
 		searchPanel.add(btnOk);
 		cboxDateA = new JComboBox(annee); //annee est generer par un boucle for 
-		cboxDateA.setBounds(349, 110, 85, 20);
+		cboxDateA.setBounds(129, 179, 85, 20);
 		searchPanel.add(cboxDateA);
 		
 		cboxDateB = new JComboBox(annee);
-		cboxDateB.setBounds(504, 110, 85, 20);
+		cboxDateB.setBounds(272, 179, 85, 20);
 		searchPanel.add(cboxDateB);
 		
 		JLabel lblSelectDate = new JLabel("Date between : ");
-		lblSelectDate.setBounds(246, 113, 93, 14);
+		lblSelectDate.setBounds(26, 182, 93, 14);
 		lblSelectDate.setForeground(Color.white);
 		searchPanel.add(lblSelectDate);
 		
 		JLabel lblAnd = new JLabel("and");
 		lblAnd.setForeground(Color.WHITE);
-		lblAnd.setBounds(456, 113, 46, 14);
+		lblAnd.setBounds(236, 182, 46, 14);
 		searchPanel.add(lblAnd);
 		
 		JLabel lblPays = new JLabel("Country :");
 		lblPays.setForeground(Color.WHITE);
-		lblPays.setBounds(246, 143, 69, 14);
+		lblPays.setBounds(26, 214, 69, 14);
 		searchPanel.add(lblPays);
 		
 		cboxPays = new JComboBox(pays);
-		cboxPays.setBounds(349, 140, 85, 20);
+		cboxPays.setBounds(129, 211, 85, 20);
 		searchPanel.add(cboxPays);
-		
-		
 		
 		JLabel lblBgImg = new JLabel();
 		//String path="/imgs/stars3.jpg";
@@ -381,7 +348,6 @@ public class WinScreenTest1 extends JFrame {
 		lblBgImg.setBounds(0, 0, 1019, 633);
 		contentPane.add(lblBgImg);
 		
-	
 		affichePanel.setVisible(false);
 	
 	}
@@ -402,21 +368,6 @@ public class WinScreenTest1 extends JFrame {
 		            String searchQuery = "SELECT * FROM stages"; //Ici notre requêtes
 		            rs = st.executeQuery(searchQuery); //exécuter
 		            
-		            /*
-		            User user;
-		            
-		            while(rs.next()) //inserer les données récupérés depuis la bdd dans User
-		            {
-		                user = new User( rs.getInt("id"),
-		                				 rs.getString("nom"),
-		                				 rs.getInt("age"),
-		                				 rs.getDate("date"),
-		                				 rs.getBoolean("covid-19"),
-		                				 rs.getString("pays"),
-		                				 rs.getInt("distance"));
-		                usersList.add(user); //ensuite ajouter user dans la liste
-		            }
-		            */ //Transformer cette instruction en une fonction pour éviter de modifier les valeurs pour chaque condition
 		            
 		            usersList = addToUsersList(rs, usersList);
 		            
@@ -483,6 +434,8 @@ public class WinScreenTest1 extends JFrame {
         }
 	}
 	
+	//------------------------------------------------------------------------------------------------------------------------------------------------------//
+	
 	public ArrayList<User> ListUsersTrier(int a){ // if a = 1 (Date) if a = 2 (name) if a = 3 (country)
 		ArrayList<User> usersList = new ArrayList<User>();
 		Statement st;
@@ -496,7 +449,6 @@ public class WinScreenTest1 extends JFrame {
 	            String searchQuery = "SELECT * FROM stages ORDER BY date DESC"; //Ici notre requêtes pour trier
 	            rs = st.executeQuery(searchQuery); //exécuter
 	            
-	            User user;
 	            
 	            usersList = addToUsersList(rs, usersList);
 	            
@@ -511,7 +463,6 @@ public class WinScreenTest1 extends JFrame {
   	            String searchQuery = "SELECT * FROM stages ORDER BY date ASC"; //Ici notre requêtes pour trier
   	            rs = st.executeQuery(searchQuery); //exécuter
   	            
-  	            User user;
   	            
   	            usersList = addToUsersList(rs, usersList);
   	            
@@ -525,7 +476,6 @@ public class WinScreenTest1 extends JFrame {
    	            String searchQuery = "SELECT * FROM stages ORDER BY winner ASC"; //Ici notre requêtes pour trier
    	            rs = st.executeQuery(searchQuery); //exécuter
    	            
-   	            User user;
    	            
    	            usersList = addToUsersList(rs, usersList);
    	            
@@ -538,8 +488,7 @@ public class WinScreenTest1 extends JFrame {
 	  	            st = con.createStatement(); //on creer des statements pour extraire les données
 	  	            String searchQuery = "SELECT * FROM stages ORDER BY winner_country ASC"; //Ici notre requêtes pour trier
 	  	            rs = st.executeQuery(searchQuery); //exécuter
-	  	            
-	  	            User user;
+	  	           
 	  	            
 	  	            usersList = addToUsersList(rs, usersList);
 	  	            
@@ -552,8 +501,7 @@ public class WinScreenTest1 extends JFrame {
 		  	            st = con.createStatement(); //on creer des statements pour extraire les données
 		  	            String searchQuery = "SELECT * FROM stages ORDER BY type ASC"; //Ici notre requêtes pour trier
 		  	            rs = st.executeQuery(searchQuery); //exécuter
-		  	            
-		  	            User user;
+		  	           
 		  	            
 		  	            usersList = addToUsersList(rs, usersList);
 		  	            
@@ -567,7 +515,6 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM stages ORDER BY origin ASC"; //Ici notre requêtes pour trier
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
 	  	            
 	  	            usersList = addToUsersList(rs, usersList);
 	  	            
@@ -581,7 +528,6 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM stages ORDER BY destination ASC"; //Ici notre requêtes pour trier
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
 	  	            
 	  	            usersList = addToUsersList(rs, usersList);
 	  	            
@@ -595,7 +541,6 @@ public class WinScreenTest1 extends JFrame {
 	  	            String searchQuery = "SELECT * FROM stages ORDER BY distance DESC"; //Ici notre requêtes pour trier
 	  	            rs = st.executeQuery(searchQuery); //exécuter
 	  	            
-	  	            User user;
 	  	            
 	  	            usersList = addToUsersList(rs, usersList);
 	  	            
@@ -608,61 +553,7 @@ public class WinScreenTest1 extends JFrame {
 		  	            st = con.createStatement(); //on creer des statements pour extraire les données
 		  	            String searchQuery = "SELECT * FROM stages ORDER BY distance ASC"; //Ici notre requêtes pour trier
 		  	            rs = st.executeQuery(searchQuery); //exécuter
-		  	            
-		  	            User user;
-		  	            
-		  	            usersList = addToUsersList(rs, usersList);
-		  	            
-		  	        }catch(Exception ex){
-		  	            System.out.println(ex.getMessage());
-		  	        }
-        }else if(a == 10){ // best player
-	       	 try{
-	  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
-	  	            st = con.createStatement(); //on creer des statements pour extraire les données
-	  	            String searchQuery = "SELECT * FROM ( SELECT *,count(winner) as mycount FROM stages GROUP BY winner )s GROUP BY mycount DESC LIMIT 1 "; //Ici notre requêtes pour trier
-	  	         
-	  	            //SELECT winner,count(winner) as mycount FROM stages GROUP BY winner
-	  	            //SELECT winner, max(mycount) FROM ( SELECT winner,count(winner) as mycount FROM stages GROUP BY winner ) s
-	  	            /*SELECT *
-	  	          	  FROM stages
-	  	              WHERE count(winner) =
-	  	              (
-		  	            SELECT max(mycount) 
-		  	            FROM ( 
-		  	                SELECT winner,count(winner) as mycount 
-		  	                FROM stages 
-		  	                GROUP BY winner ) s
-		  	            ) 
-	  	            GROUP BY winner
-	  	            */
-	  	            
-	  	            /*SELECT winner, max(mycount)
-					FROM ( 
-	    				SELECT winner,count(winner) as mycount 
-	    				FROM stages GROUP BY winner 
-						)s
-					GROUP BY mycount DESC
-					LIMIT 1*/
-	  	            rs = st.executeQuery(searchQuery); //exécuter
-	  	         
-	  	            User user;
-	  	            
-	  	            usersList = addToUsersList(rs, usersList);
-	  	            
-	  	        }catch(Exception ex){
-	  	            System.out.println(ex.getMessage());
-	  	        }
-        }else if(a == 11){ // best country top 5
-		       	 try{
-		  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
-		  	            st = con.createStatement(); //on creer des statements pour extraire les données
-		  	            String searchQuery = "SELECT * FROM ( SELECT *,count(winner_country) as mycount FROM stages GROUP BY winner_country )s GROUP BY mycount DESC LIMIT 5 "; //Ici notre requêtes pour trier
-		  	         
-		  	            
-		  	            rs = st.executeQuery(searchQuery); //exécuter
-		  	         
-		  	            User user;
+		  	           
 		  	            
 		  	            usersList = addToUsersList(rs, usersList);
 		  	            
@@ -674,6 +565,46 @@ public class WinScreenTest1 extends JFrame {
         } 
         return usersList;
 	}
+	
+
+	public ArrayList<User2> ListTopRank(int a){ // if a = 1 (Player) if a = 2 (Countries)
+		ArrayList<User2> usersList = new ArrayList<User2>();
+		Statement st;
+        ResultSet rs;
+        PreparedStatement ps = null;
+        
+        if(a == 1){ // best player
+	       	 try{
+	  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+	  	            st = con.createStatement(); //on creer des statements pour extraire les données
+	  	            String searchQuery = "SELECT * FROM ( SELECT *,count(winner) as mycount FROM stages GROUP BY winner )s GROUP BY mycount DESC LIMIT 5 "; //Ici notre requêtes pour trier
+	  	            rs = st.executeQuery(searchQuery); //exécuter
+	  	  
+	  	            
+	  	            usersList = addToUsers2List(rs, usersList);
+	  	            
+	  	        }catch(Exception ex){
+	  	            System.out.println(ex.getMessage());
+	  	        }
+       }else if(a == 2){ // best country top 5
+		       	 try{
+		  	        	Connection con = ConnexionJM.connecterDB(); //connexion au bdd
+		  	            st = con.createStatement(); //on creer des statements pour extraire les données
+		  	            String searchQuery = "SELECT * FROM ( SELECT *,count(winner_country) as mycount FROM stages GROUP BY winner_country )s GROUP BY mycount DESC LIMIT 5 "; //Ici notre requêtes pour trier 
+		  	            rs = st.executeQuery(searchQuery); //exécuter
+		  	         
+		  	            
+		  	            usersList = addToUsers2List(rs, usersList);
+		  	            
+		  	        }catch(Exception ex){
+		  	            System.out.println(ex.getMessage());
+		  	        }
+       }else{
+       	
+       } 
+        return usersList;   
+	}
+	//------------------------------------------------------------------------------------------------------------------------------------------------------//
 	
 	public ArrayList<User> addToUsersList (ResultSet rs, ArrayList<User> usersList){
 		  User user;
@@ -702,6 +633,36 @@ public class WinScreenTest1 extends JFrame {
 				}
               	return usersList;
             }
+	
+	public ArrayList<User2> addToUsers2List (ResultSet rs, ArrayList<User2> users2List){
+		  User2 user;
+          
+         
+              try { 
+              	System.out.println("Adding values to instance User...");
+	                while(rs.next()) //inserer les données récupérés depuis la bdd dans User
+	                {
+						user = new User2( rs.getInt("id"),
+										 rs.getString("stage"),
+										 rs.getDate("date"),
+										 rs.getFloat("distance"),
+										 rs.getString("origin"),
+										 rs.getString("destination"),
+										 rs.getString("type"),
+										 rs.getString("winner"),
+										 rs.getString("winner_country"),
+										 rs.getInt("mycount")
+										 ); 
+						
+						users2List.add(user); //ensuite ajouter user dans la liste
+	                }
+	     
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	return users2List;
+          }
 	
 	public void showUserData(){ //afficher les données récupérés dans JTable
 		ArrayList<User> users = ListUsers();
@@ -753,28 +714,31 @@ public class WinScreenTest1 extends JFrame {
 	public void showBestStat(int a){
 		int numInstruction = a;
 			if(numInstruction == 10) {
-			ArrayList<User> users = ListUsersTrier(10);
+			//ArrayList<User> users = ListUsersTrier(10);
+			ArrayList<User2> users = ListTopRank(1);
 			DefaultTableModel model = (DefaultTableModel)table3.getModel();
-			Object[] row = new Object[2];
+			Object[] row = new Object[4];
 			  for(int i = 0; i < users.size(); i++) 
 		        {
-		        	 row[0] = users.get(i).getWinner();
-		             row[1] = users.get(i).getWinnerCountry();
-		             //row[2] = nb de victoire
+				     row[0] = i+1;
+		        	 row[1] = users.get(i).getWinner();
+		             row[2] = users.get(i).getWinnerCountry();
+		             row[3] = users.get(i).getCmp();
 		             model.addRow(row);
 		        }
 			 table3.setModel(model);
 			 scrollPane.setViewportView(table3);
 			 
 		}else if(numInstruction == 11){
-			ArrayList<User> users = ListUsersTrier(11);
+			//ArrayList<User> users = ListUsersTrier(11);
+			ArrayList<User2> users = ListTopRank(2);
 			DefaultTableModel model = (DefaultTableModel)table4.getModel();
-			Object[] row = new Object[2];
+			Object[] row = new Object[3];
 			  for(int i = 0; i < users.size(); i++) 
 		        {
 				  	 row[0] = i+1;
 		        	 row[1] = users.get(i).getWinnerCountry();
-		        	  //row[2] = nb de victoire
+		        	 row[2] = users.get(i).getCmp();
 		             model.addRow(row);
 		        }
 			 table4.setModel(model);
@@ -783,6 +747,7 @@ public class WinScreenTest1 extends JFrame {
 			System.out.println("Erreur dans le code ! Fait attention au numéro d'instruction");
 		}
 	}
+	
 	
 	
 	/*******************************************************************************************************************************/
@@ -802,39 +767,7 @@ public class WinScreenTest1 extends JFrame {
 		            st = con.createStatement(); //on creer des statements pour extraire les données
 		            String searchQuery = "SELECT * FROM stages WHERE CONCAT(`origin`, `destination`, `type`, `winner`) LIKE '%"+ValToSearch+"%'"; //Ici notre requêtes
 		            rs = st.executeQuery(searchQuery); //exécuter
-		            /*
-		            User user;
-		            
-		            if(isNullOrEmpty(ValToSearch)) {
-			        	   System.out.println("-----> Error : No text found\n");
-			        	   lblMsgErreur2.setVisible(true);
-			        	   affichePanel.setVisible(false);
-			           }else {
-				            if (!rs.isBeforeFirst()) {  
-				            	System.out.println("Scanning text...");
-				            	System.out.println("Text : "+ValToSearch);
-				            	System.out.println("Searching in data...");
-				                System.out.println("-----> Error : No data found\n");
-				                lblMsgErreur.setVisible(true);
-				                lblMsgErreur2.setVisible(false);
-				                affichePanel.setVisible(false);
-				            }else { 
-			             
-					            while(rs.next()) {
-					                user = new User(
-					                                 rs.getInt("id"),
-					                                 rs.getString("nom"),
-					                                 rs.getInt("age"),
-					                                 rs.getDate("date"),
-					                                 rs.getBoolean("covid-19"),
-					                                 rs.getString("pays"),
-					                                 rs.getInt("distance")
-					                                );
-					                usersList.add(user);
-					            }
-				            }
-			           }
-			           */
+		           
 		            usersList = addToUsersListWithSearchBar(rs,usersList,ValToSearch);
 		            
 		        }catch(Exception ex){
